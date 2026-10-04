@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import prettier from 'eslint-config-prettier'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
@@ -18,5 +19,18 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // Features must go through their own API hooks; page code never calls fetch directly.
+      'no-restricted-globals': [
+        'error',
+        { name: 'fetch', message: 'Use httpClient from @/api/client.' },
+      ],
+    },
   },
+  {
+    files: ['src/api/client/**'],
+    rules: { 'no-restricted-globals': 'off' },
+  },
+  // Must be last: turns off stylistic rules that conflict with Prettier.
+  prettier,
 ])
