@@ -1,0 +1,168 @@
+﻿@model BusinessObjects.ProductsViewModel
+@{
+    var securityDetailsType = Model.ProductViewType;
+}
+@{
+    foreach (BusinessObjects.ProductViewModel portfolio in Model.Products)
+    {
+        var stockCode = portfolio.Symbol.Substring(0, 3);
+        {
+            <div class="col-md-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Name:
+                                </div>
+                                <div class="col-md-6">
+                                    <strong> @portfolio.Name</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Symbol:
+                                </div>
+                                <div class="col-md-2">
+                                    <strong>@portfolio.Symbol</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Market Cap:
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.MarketCap</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Current Price:
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.Close</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Price Change:
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong> @portfolio.Change</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    YahooFinance:
+                                </div>
+                                <div class="col-md-2">
+                                    <strong><a target="_blank" rel="noopener" href="http://finance.yahoo.com/q?s=@portfolio.Symbol">@portfolio.Symbol</a></strong>
+                                </div>
+                                <div class="col-md-2">
+                                    TradingView:
+                                </div>
+                                <div class="col-md-2">
+                                    <strong><a target="_blank" rel="noopener" href="https://www.tradingview.com/chart/?symbol=ASX:@stockCode&amp;aff_id=4009">@portfolio.Symbol</a></strong>
+                                </div>
+                                <div class="col-md-2">
+                                    MarketIndex:
+                                </div>
+                                <div class="col-md-2">
+                                    <strong><a target="_blank" rel="noopener" href="https://www.marketindex.com.au/asx/@stockCode">@portfolio.Symbol</a></strong>
+                                </div>
+                            </div>
+                            @if (securityDetailsType == "Watchlist")
+                            {
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Scan Type
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.ScanType</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Scan Date
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.ScanDate</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Price Change:
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong></strong>
+                                </div>
+                            </div>
+
+                            }
+                            @if (securityDetailsType == "PortfolioHistory")
+                            {
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Open Date
+                                </div>
+                                <div class="col-md-2">
+                                    <strong>@portfolio.OpenDate</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Open Price
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.OpenPrice</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Profit/Loss
+                                </div>
+                                <div class="col-md-2">
+                                    <strong>@portfolio.ProfitLoss</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Close Date
+                                </div>
+                                <div class="col-md-2">
+                                    <strong>@portfolio.CloseDate</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Close Price
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong>@portfolio.ClosePrice</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    Trade Days
+                                </div>
+                                <div class="col-md-2">
+                                    <strong>@portfolio.TradeDays</strong>
+                                </div>
+                            </div>
+                            }
+
+                            <div class="row">
+                                &nbsp;
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img border="0" src="http://chart.eoddata.com/?e=ASX&s=@stockCode&w=600&h=400&bs=candle&ma=9-21&mat=EMA-EMA&i=MACD" width="600" height="400" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

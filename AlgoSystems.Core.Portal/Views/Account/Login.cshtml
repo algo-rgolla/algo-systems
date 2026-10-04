@@ -1,0 +1,83 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<div class="loginColumns animated fadeInDown">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <h2 class="font-bold">Welcome</h2>
+@*            <div class="row alert alert-danger">
+                <b>
+                    Disclaimer: <b>
+                        <br /><br />
+                    </b>Read Terms and Conditions before logging into the site. 
+                </b>
+            </div>
+*@            @*<p>
+            AlgoSystems aim  to help your investment journey on:
+            </p>
+
+            <p>
+            Method - Process by which you enter and exit the market.  Screeners from many technical criteria to find financial instruments.
+            </p>
+
+            <p>
+            Money Management - Rules to control risk and drawdown with stock portfolio.
+            </p>*@
+
+            @*<p>
+            Mindset - Discipline in following rules with patience for consistency results.
+            </p>*@
+
+        </div>
+        <div class="col-md-6">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="loginColumns animated fadeInDown">
+    <div class="row">
+        <div class="alert alert-success col-md-12">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
+
+            <strong>
+                <i class="ace-icon fa fa-check"></i>
+                3 Golden Trading Rules
+            </strong>
+
+            <ul>
+                <li>Having a trading plan and discipline to follow it.</li>
+                <li>Trade with trend and listen to the market price action.</li>
+                <li>Discipline to follow stop losses and rules.</li>
+            </ul>
+            <br />
+        </div>
+
+    </div>
+</div>

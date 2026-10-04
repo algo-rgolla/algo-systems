@@ -1,0 +1,104 @@
+﻿@model BusinessObjects.ProductsViewModel
+
+<h1>@ViewData["ScreenerType"]</h1>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Quote</th>
+            <th>Sector</th>
+            <th>Open</th>
+            <th>Today Close</th>
+            <th class="hidden-480">Volume</th>
+            <th>Open Date</th>
+            <th>% Change from Yesterday</th>
+            <th>Total % Change</th>
+            <th>Capital Invested</th>
+            <th>(+/-)Profit/Loss</th>
+        </tr>
+    </thead>
+    @{
+        
+        var totalProfitLoss = 0;
+        var totalCapital = 0;
+    }
+    <tbody>
+        @foreach (var quote in Model.Products)
+        {
+            int capital = 0;
+            if (quote.OpenPrice != null && quote.Volume != null)
+            {
+                capital = Convert.ToInt32(Convert.ToDecimal(quote.OpenPrice) * Convert.ToInt32(quote.Volume));
+            }
+
+            //var portfolioType = ViewData["PortfolioType"];
+            var portfolioType = "LongPortfolio";
+            var totalChange = 0.0M;
+            var profitLoss =0.0M;
+
+            if (!String.IsNullOrEmpty(quote.Close) && !String.IsNullOrEmpty(quote.OpenPrice))
+            {
+                if (portfolioType == "LongPortfolio")
+                {
+                    totalChange = Math.Round(((Convert.ToDecimal(quote.Close) - Convert.ToDecimal(quote.OpenPrice)) / Convert.ToDecimal(quote.OpenPrice)) * 100, 2);
+                    profitLoss = ((Convert.ToDecimal(quote.Close) - Convert.ToDecimal(quote.OpenPrice)) * Convert.ToInt32(quote.Volume));
+                }
+
+                if (portfolioType == "PortfolioHistory")
+                {
+                    totalChange = Math.Round(((Convert.ToDecimal(quote.Close) - Convert.ToDecimal(quote.OpenPrice)) / Convert.ToDecimal(quote.OpenPrice)) * 100, 2);
+                    profitLoss = Convert.ToDecimal(quote.ProfitLoss);
+                }
+
+                if (portfolioType == "ShortPortfolio")
+                {
+                    totalChange = Math.Round(((Convert.ToDecimal(quote.OpenPrice) - Convert.ToDecimal(quote.Close)) / Convert.ToDecimal(quote.OpenPrice)) * 100, 2);
+                    profitLoss = ((Convert.ToDecimal(quote.OpenPrice) - Convert.ToDecimal(quote.Close)) * Convert.ToInt32(quote.Volume));
+                }
+            }
+
+            <tr>
+                <td>@quote.Symbol</td>
+                <td>@quote.Sector</td>
+                <td>@quote.OpenPrice</td>
+                <td>@quote.Close</td>
+                <td>@quote.Volume</td>
+                <td>@quote.OpenDate</td>
+                @if (quote.Change != null && quote.Change.Count() > 3 &&   Convert.ToDecimal(quote.Change.Replace("%", "")) <= 0)
+                {
+                    <td><font color="red">@quote.Change</font></td>
+                }
+                else
+                {
+                    <td><font color="green"> @quote.Change</font></td>
+                }
+                @if (totalChange <= 0)
+                {
+                    <td><font color="red">@totalChange%</font></td>
+                }
+                else
+                {
+                    <td><font color="green">@totalChange%</font></td>
+                }
+                <td>@capital</td>
+
+                @if (Convert.ToDecimal(profitLoss) <= 0)
+                {
+                    <td><font color="red">@Math.Round(profitLoss, 2)</font></td>
+                }
+                else
+                {
+                    <td><font color="green">@Math.Round(profitLoss, 2)</font></td>
+                }
+                
+            </tr>
+            totalProfitLoss = totalProfitLoss + Convert.ToInt32(profitLoss);
+            totalCapital = totalCapital + Convert.ToInt32(capital);
+        }
+        <tr>
+            <td colspan="7">&nbsp;</td>
+            <td>Total:</td>
+            <td>@totalCapital</td>
+            <td>@totalProfitLoss</td>
+        </tr>
+    </tbody>
+</table>

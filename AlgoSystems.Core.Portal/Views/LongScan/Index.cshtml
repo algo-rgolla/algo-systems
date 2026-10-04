@@ -1,0 +1,96 @@
+﻿@using AlgoSystems.Common;
+@model BusinessObjects.ProductsViewModel
+@{
+    ViewBag.Title = "ASX200Charts";
+}
+<h1>Scan - @Model.PageHeader</h1>
+<div class="alert alert-success col-md-6">
+    <strong>
+        <i class="ace-icon fa fa-check"></i>
+        Global Rules
+    </strong>
+    <ul>
+        <li> Stock Price > 1$</li>        
+        <li> Today stock turnover > 300k</li>        
+        <li> Change > 0 and < 5%</li>
+        <li> MarketCap > 100 mil</li>
+        <li> Stocks trading today</li>
+    </ul>    
+</div>
+@if (@Model.ScanType?.ToString() == Scans.LongMACDCrossover)
+{
+    <div class="alert alert-success col-md-6">
+        <strong>
+            <i class="ace-icon fa fa-check"></i>
+            MACD Scan Rules
+        </strong>
+        <ul>
+            <li> MACD &lt; 0</li>
+            <li> MACD line crosses Signal line</li>
+            <li> Stock Price > EMA 200</li>            
+        </ul>
+        <br/>
+    </div>
+}
+@* @if (@Model.ScanType?.ToString() == Scans.LongMACDHistogram)
+{
+    <div class="alert alert-success col-md-6">
+        <strong>
+            <i class="ace-icon fa fa-check"></i>
+            MACD Momentum Scan Rules
+        </strong>
+        <ul>
+            <li> Price > EMA21 && EMA21 > EMA63</li>
+            <li> MACD Histogram continue raiase for 3 days</li>
+            <li> MACD Histogram today &lt; 0</li>            
+        </ul>
+        <br/>
+    </div>
+}
+ *@
+ @if (@Model.ScanType?.ToString() == Scans.LongEMATrendStarters)
+{
+    <div class="alert alert-success col-md-6">
+        <strong>
+            <i class="ace-icon fa fa-check"></i>
+            EMA Trend Starters
+        </strong>
+        <ul>
+            <li> EMA 9 > EMA 21 > 63 for the first time</li>
+        </ul>
+        <br/>
+    </div>
+}
+@if (@Model.ScanType?.ToString() == Scans.LongEMACrossover)
+{
+    <div class="alert alert-success col-md-6">
+        <strong>
+            <i class="ace-icon fa fa-check"></i>
+            SMA Crossover
+        </strong>
+        <ul>
+            <li> SMA12 Crosses SMA26</li>
+        </ul>
+        <br />
+    </div>
+}
+@{
+    if (Model?.Products?.Count > 0)
+    {
+        var pages = Model.PageTotal;
+        var stocksCount = pages * 20;
+
+    <input type="hidden" id="txtPageTotal" name="PagesReceived" value="@Model.PageTotal" />
+    <input type="hidden" id="txtPagesRequested" name="PagesRequested" value="0" />
+
+    <div class="row" id="divResult">
+                @Html.Partial("_ProductDetails", Model)
+    </div>
+    }
+    else
+    {
+    <div class="col-xs-12 col-sm-6 widget-container-col" style="width:900px">
+                <h2>No Items found for scan criteria.</h2>
+    </div>
+    }
+}

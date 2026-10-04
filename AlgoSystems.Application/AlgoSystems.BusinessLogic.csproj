@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlgoSystems.Common\AlgoSystems.Common.csproj" />
+    <ProjectReference Include="..\AlgoSystems.Domain.Entities\AlgoSystems.Domain.Entities.csproj" />
+    <ProjectReference Include="..\AlgoSystems.Indicator\AlgoSystems.Indicator.csproj" />
+    <ProjectReference Include="..\BusinessObjects\AlgoSystems.BusinessObjects.csproj" />
+    <ProjectReference Include="..\EODHistoricalData.Wrapper-master\EODHistoricalData.Wrapper\EODHistoricalData.Wrapper.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+
+</Project>

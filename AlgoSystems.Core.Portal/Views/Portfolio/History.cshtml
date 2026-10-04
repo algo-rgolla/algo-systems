@@ -1,0 +1,11 @@
+﻿@model BusinessObjects.ProductsViewModel
+@{
+    ViewBag.Title = "Portfolio History";
+}
+<h1>@Model.PageHeader</h1>
+
+@Html.Partial("_PortfolioList", Model);
+
+<div class="row" id="divResult">
+    @Html.Partial("_ProductDetails", Model)
+</div>

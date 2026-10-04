@@ -1,0 +1,235 @@
+﻿@using AlgoSystems.Core.Portal.Helpers
+@using AlgoSystems.Domain.Entities.Models
+@inject SignInManager<ApplicationUser> signInManager;
+@using AlgoSystems.Common
+@using AlgoSystems.Application.Services
+@{
+    //var scanResultsService = new ScanResultsService();
+    //var scanCount = scanResultsService.LoadScanResultsSettings();
+}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+        <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <img alt="image" class="rounded-circle" src="/Images/profile_ravi.jpg">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false">
+                        <span class="block m-t-xs font-bold">AlgoSystems</span>
+                        <span class="text-muted text-xs block">Ravi Golla</span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Dashboard", action: "Index")">
+                <a  asp-area="" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa fa-th-large"></i>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Search", action: "Index")">
+                <a asp-area="" asp-controller="Search" asp-action="Index">
+                    <i class="fa fa-search-plus"></i>
+                    <span class="nav-label">Search</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Statistics", action: "Index")">
+                <a asp-area="" asp-controller="Statistics" asp-action="Index">
+                    <i class="fa fa-pie-chart"></i>
+                    <span class="nav-label">Statistics</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "LongScan")">
+                <a asp-area="" asp-controller="LongScan" asp-action="BullishTweezers">
+                    <i class="fa fa-line-chart"></i>
+                    <span class="nav-label">Long Scans</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Scan", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "EMACrossover")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="EMACrossover">
+                            EMA Crossover
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "EMATrendStart")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="EMATrendStart">
+                            Trend Starters
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "MacdCrossover")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="MacdCrossover">
+                            MACD Crossover
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "BigGainers")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="BigGainers">
+                            Big Gainers
+                        </a>
+                    </li>
+
+@*                    <li class="@Html.IsSelected(action: "BullishTweezers")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="BullishTweezers">
+                            Bullish Tweezers
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "BullishThrusting")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="BullishThrusting">
+                            Bullish Thrusting
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "BullishEngulfing")">
+                        <a asp-area="" asp-controller="LongScan" asp-action="BullishEngulfing">
+                            Bullish Engulfing
+                        </a>
+                    </li>
+*@                </ul>
+            </li>
+@*            <li class="@Html.IsSelected(controller: "ShortScan")">
+                <a asp-area="" asp-controller="ShortScan" asp-action="BearishTweezers">
+                    <i class="fa fa-area-chart"></i>
+                    <span class="nav-label">Short Scans</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ShortScan", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "BearishTweezers")">
+                        <a asp-area="" asp-controller="ShortScan" asp-action="BearishTweezers">
+                            Bearish Tweezers
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "BearishThrusting")">
+                        <a asp-area="" asp-controller="ShortScan" asp-action="BearishThrusting">
+                            Bearish Thrusting
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "BearishEngulfing")">
+                        <a asp-area="" asp-controller="ShortScan" asp-action="BearishEngulfing">
+                            Bearish Engulfing
+                        </a>
+                    </li>
+                </ul>
+            </li>
+*@
+            <li class="@Html.IsSelected(controller: "Markets")">
+                <a asp-area="" asp-controller="LongScan" asp-action="BullishTweezers">
+                    <i class="fa fa-line-chart"></i>
+                    <span class="nav-label">Markets</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Market", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Indices")">
+                        <a asp-area="" asp-controller="Market" asp-action="Indices">
+                            Indices
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected(action: "Commodities")">
+                        <a asp-area="" asp-controller="Market" asp-action="Commodities">
+                            Commodities
+                        </a>
+                    </li>   
+                </ul>
+            </li>
+            <li class="@Html.IsSelected(controller: "Watchlist")">
+                <a asp-area="" asp-controller="Watchlist" asp-action="Index">
+                    <i class="fa fa-binoculars"></i>
+                    <span class="nav-label">Watchlist</span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Portfolio")">
+                <a asp-area="" asp-controller="Portfolio" asp-action="BearishTweezers">
+                    <i class="fa fa-list-alt"></i>
+                    <span class="nav-label">Portfolios</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Portfolio", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "MacdCrossoverPortfolio")">
+                        <a asp-area="" asp-controller="Portfolio" asp-action="MacdCrossoverPortfolio">
+                            <span class="nav-label">MACD Crossover</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Portfolio", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MacdCrossoverPortfolio")">
+                                <a href="@Url.Action("MacdCrossoverPortfolio", "Portfolio")">Portfolio</a>
+                                </li>
+                            <li class="@Html.IsSelected(action: "MacdHistory")">
+                                <a href="@Url.Action("MacdCrossoverHistory", "Portfolio")">History</a>
+                                </li>
+                        </ul>
+                    </li>
+                    <li class="@Html.IsSelected(action: "MacdMomentumPortfolio")">
+                        <a asp-area="" asp-controller="Portfolio" asp-action="MacdMomentumPortfolio">
+                            <span class="nav-label">MACD Momentum</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Portfolio", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MacdMomentumPortfolio")">
+                                <a href="@Url.Action("MacdMomentumPortfolio", "Portfolio")">Portfolio</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "TrendHistory")">
+                                <a href="@Url.Action("MacdMomentumHistory", "Portfolio")">History</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@Html.IsSelected(action: "EMATrendStartPortfolio")">
+                        <a asp-area="" asp-controller="Portfolio" asp-action="EMATrendStartPortfolio">
+                            <span class="nav-label">EMA Trend Start</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Portfolio", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "EMATrendStartPortfolio")">
+                                <a href="@Url.Action("EMATrendStartPortfolio", "Portfolio")">Portfolio</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "EMATrendStartHistory")">
+                                <a href="@Url.Action("EMATrendStartHistory", "Portfolio")">History</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@Html.IsSelected(action: "EMACrossoverPortfolio")">
+                        <a asp-area="" asp-controller="Portfolio" asp-action="EMACrossoverPortfolio">
+                            <span class="nav-label">EMA Crossover</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Portfolio", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "EMACrossoverPortfolio")">
+                                <a href="@Url.Action("EMACrossoverPortfolio", "Portfolio")">Portfolio</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "EMACrossoverHistory")">
+                                <a href="@Url.Action("EMACrossoverHistory", "Portfolio")">History</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Sector", action: "Index")">
+                <a asp-area="" asp-controller="Sector" asp-action="Index">
+                    <i class="fa fa-pie-chart"></i>
+                    <span class="nav-label">Sectors </span>
+                </a>
+            </li>
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <li class="@Html.IsSelected(controller: "Admin")">
+                    <a asp-area="" asp-controller="Admin" asp-action="ListRoles">
+                        <i class="fa fa-puzzle-piece"></i>
+                        <span class="nav-label">Admin</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Admin", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "ListRoles")">
+                            <a asp-area="" asp-controller="Admin" asp-action="ListRoles">
+                                Manage Roles
+                            </a>
+                        </li>
+                        <li class="@Html.IsSelected(action: "ListUsers")">
+                            <a asp-area="" asp-controller="Admin" asp-action="ListUsers">
+                                Manage Users
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>

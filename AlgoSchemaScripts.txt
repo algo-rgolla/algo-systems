@@ -1,0 +1,70 @@
+USE [AlgoSystems]
+GO
+/****** Object:  Table [Code].[IndustryGroup]    Script Date: 15/11/2025 6:55:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Code].[IndustryGroup](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[CreatedDate] [datetime2](7) NOT NULL,
+	[CreatedBy] [nvarchar](256) NOT NULL,
+	[ModifiedDate] [datetime2](7) NOT NULL,
+	[ModifiedBy] [nvarchar](256) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DisplayOrder] [int] NULL,
+ CONSTRAINT [PK_IndustryGroup] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [Code].[SectorIndustryMapper]    Script Date: 15/11/2025 6:55:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Code].[SectorIndustryMapper](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SectorId] [int] NOT NULL,
+	[IndustryGroupId] [int] NOT NULL,
+	[CreatedDate] [datetime2](7) NOT NULL,
+	[CreatedBy] [nvarchar](256) NOT NULL,
+	[ModifiedDate] [datetime2](7) NOT NULL,
+	[ModifiedBy] [nvarchar](256) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DisplayOrder] [int] NULL,
+ CONSTRAINT [PK_SectorIndustryMapper] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [Code].[SectorType]    Script Date: 15/11/2025 6:55:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [Code].[SectorType](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Code] [nvarchar](50) NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[CreatedDate] [datetime2](7) NOT NULL,
+	[CreatedBy] [nvarchar](256) NOT NULL,
+	[ModifiedDate] [datetime2](7) NOT NULL,
+	[ModifiedBy] [nvarchar](256) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DisplayOrder] [int] NULL,
+ CONSTRAINT [PK_SubmissionActivityType_1] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [Code].[SectorType] ADD  CONSTRAINT [DF_SubmissionActivityType_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [Code].[SectorType] ADD  CONSTRAINT [DF_SubmissionActivityType_ModifiedDate]  DEFAULT (getdate()) FOR [ModifiedDate]
+GO

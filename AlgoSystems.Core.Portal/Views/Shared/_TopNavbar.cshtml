@@ -1,0 +1,39 @@
+﻿@using AlgoSystems.Domain.Entities.Models
+@inject SignInManager<ApplicationUser> signInManager;
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <form role="search" class="navbar-form-custom" method="post" action="">
+                <div class="form-group">
+                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                </div>
+            </form>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li style="padding:20px">
+                <span class="m-r-sm text-muted welcome-message">Welcome to AlgoSystems</span>
+            </li>
+            @if (signInManager.IsSignedIn(User))
+            {
+                <li>
+                    <form method="post" asp-action="logout" asp-controller="account">
+                        <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">
+                            Logout @User.Identity.Name
+                        </button>
+                    </form>
+                </li>
+            }
+            else
+            {
+   @*             <li>
+                    <a asp-action="register" asp-controller="account" class="nav-link">Register</a>
+                </li>*@
+                <li>
+                    <a asp-action="login" asp-controller="account" class="nav-link">Login</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

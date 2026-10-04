@@ -1,0 +1,25 @@
+﻿@model BusinessObjects.ProductsViewModel
+@{
+    ViewBag.Title = "ASX200Charts";
+}
+<h1>Sector - @Model.PageHeader</h1>
+@{
+    if(Model?.Products?.Count > 0)
+    {
+        var pages = Model.PageTotal;
+        var stocksCount = pages * 20;
+
+        <input type="hidden" id="txtPageTotal" name="PagesReceived" value="@Model.PageTotal" />
+        <input type="hidden" id="txtPagesRequested" name="PagesRequested" value="0" />
+
+        <div class="row" id="divResult">
+            @Html.Partial("_ProductDetails", Model)
+        </div>
+    }
+    else
+    {
+        <div class="col-xs-12 col-sm-6 widget-container-col" style="width:900px">
+                    <h2>No Items found for scan criteria.</h2>
+        </div>
+    }
+}

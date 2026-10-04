@@ -1,0 +1,12 @@
+TODO:
+4. Implement the US data download
+5. Implement the US data display under "US"
+- Implement Penny Start in the ASX
+- Create portfolio for Penny Starts
+- Closed due to 10 days - Find the rules for sell reasons
+- Add selling rule if the gap down for existing position
+- Add selling rule if the price down by -3% existing position
+
+
+- Remove unused code in react solution
+- Remove all warnings in react solution
