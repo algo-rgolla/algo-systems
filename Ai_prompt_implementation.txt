@@ -1,0 +1,1280 @@
+Absolutely. Here is the complete document, structured so you can paste it directly into Word, Google Docs, or Markdown and save it as a PDF.
+
+Stock Screener Frontend Development Plan
+1. Project Overview
+Build a production-quality stock screener and portfolio web application using:
+
+React
+
+TypeScript
+
+Vite
+
+MUI (Material UI)
+
+TanStack Query
+
+Professional financial data grid
+
+Dedicated charting library
+
+Backend
+.NET Core Web API
+
+SQL Server
+
+REST APIs for:
+
+Stock scanner results
+
+Stock details
+
+Watchlists
+
+Portfolio
+
+Portfolio history
+
+Frontend Design Direction
+The application should use a dark-first financial dashboard aesthetic.
+
+Design principles:
+
+Dark navy / charcoal backgrounds
+
+Subtle borders
+
+Green for positive financial values
+
+Red for negative financial values
+
+Neutral colors for unchanged values
+
+Lots of whitespace
+
+Minimal gradients
+
+Avoid excessive rounded cards
+
+Avoid excessive shadows
+
+Professional financial-terminal/SaaS appearance
+
+Responsive design
+
+Strong data readability
+
+2. Recommended Architecture
+Use a feature-oriented architecture.
+
+src/
+│
+├── app/
+│   ├── router/
+│   ├── providers/
+│   ├── theme/
+│   └── layout/
+│
+├── features/
+│   ├── dashboard/
+│   ├── screener/
+│   ├── stocks/
+│   ├── watchlist/
+│   ├── portfolio/
+│   └── auth/
+│
+├── shared/
+│   ├── components/
+│   ├── hooks/
+│   ├── formatting/
+│   └── types/
+│
+├── api/
+│   ├── client/
+│   └── types/
+│
+└── main.tsx
+
+Architectural Principles
+Features own business functionality.
+
+Shared components must remain business-agnostic.
+
+API communication must not be implemented directly inside page components.
+
+TanStack Query manages server state.
+
+Feature-specific API hooks should encapsulate queries and mutations.
+
+Types should live close to the feature that owns them unless genuinely shared.
+
+Avoid generic dumping-ground folders.
+
+Keep components small and focused.
+
+Keep business logic out of presentational components.
+
+Avoid unnecessary abstraction.
+
+Keep dependency flow predictable.
+
+Do not introduce global state unless there is a genuine requirement.
+
+3. Development Process
+Development should happen incrementally.
+
+For every phase:
+
+Implement
+   ↓
+Run application
+   ↓
+Test manually
+   ↓
+Run TypeScript
+   ↓
+Run ESLint
+   ↓
+Run production build
+   ↓
+Review code
+   ↓
+Commit to Git
+   ↓
+Move to next phase
+
+Do not ask Claude to build the entire application at once.
+
+Phase 1 — Analyse Existing Project
+Claude Prompt 1
+You are a senior React + TypeScript architect.
+
+I have an existing blank React + TypeScript project created with Vite.
+
+I am building a production-quality stock screener and portfolio web application.
+
+Backend:
+- .NET Core Web API
+- SQL Server
+- The API will provide:
+  - Stock scanner results
+  - Watchlists
+  - Portfolio
+  - Portfolio history
+
+Frontend technology decisions:
+- React
+- TypeScript
+- Vite
+- MUI (Material UI)
+- TanStack Query
+- A professional data grid
+- A charting library
+
+UI direction:
+- Dark-first financial dashboard
+- Dark navy / charcoal background
+- Subtle borders
+- Green for positive financial values
+- Red for negative financial values
+- Lots of whitespace
+- Minimal use of gradients
+- Avoid excessive rounded cards
+- Professional financial-terminal/SaaS aesthetic
+- Responsive design
+
+I want this to be a highly maintainable and scalable production frontend.
+
+For this task ONLY:
+
+1. Inspect the existing project structure and package.json.
+2. Identify what currently exists.
+3. Recommend the frontend architecture and folder structure we should build.
+4. Recommend the libraries we should install.
+5. Explain the responsibility of each major folder.
+6. Identify architectural decisions that should be made now versus later.
+
+DO NOT implement anything yet.
+DO NOT create files.
+DO NOT rewrite package.json.
+
+I will use your recommendations as the architecture for subsequent implementation steps.
+
+Test
+Review Claude's architecture before allowing implementation.
+
+Make sure it does not create excessive generic folders or unnecessary abstractions.
+
+Phase 2 — Install Dependencies
+Claude Prompt 2
+Implement the frontend foundation we agreed on.
+
+Requirements:
+
+- React + TypeScript + Vite
+- MUI
+- TanStack Query
+- React Router
+- A production-quality data grid suitable for financial tables
+- A charting library suitable for stock price and portfolio charts
+- ESLint
+- Prettier
+
+Before modifying package.json:
+
+1. Inspect the current package.json.
+2. Do not remove existing dependencies unless they are unnecessary or conflicting.
+3. Use current stable versions compatible with the existing project.
+4. Avoid installing libraries that are not actually needed.
+
+After installation:
+
+1. Configure the required libraries.
+2. Keep configuration clean and minimal.
+3. Run TypeScript checking.
+4. Run ESLint.
+5. Run the Vite build.
+
+Do not implement any application screens yet.
+
+At the end, tell me:
+- what dependencies were added
+- what configuration files were created/modified
+- what commands I should run to verify everything
+- whether the build, TypeScript and lint checks pass
+
+Test
+Run:
+
+npm run dev
+npm run build
+npm run lint
+
+Phase 3 — Create the Architecture
+Claude Prompt 3
+Now implement the agreed frontend architecture.
+
+Create a scalable folder structure suitable for a production stock screener and portfolio application.
+
+Important architectural principles:
+
+1. Prefer feature-oriented organization for business functionality.
+2. Shared UI components must not contain business-specific logic.
+3. API communication must not be implemented directly inside page components.
+4. TanStack Query logic should be encapsulated in feature/API hooks.
+5. TypeScript types should be defined close to the feature that owns them unless they are genuinely shared.
+6. Avoid generic dumping-ground folders.
+7. Avoid unnecessary abstraction.
+8. Keep components small and focused.
+9. Keep business logic out of presentational components.
+10. Make dependencies flow in a predictable direction.
+
+Expected business features will eventually include:
+
+- Dashboard
+- Stock Screener
+- Stock Details
+- Watchlist
+- Portfolio
+- Portfolio History
+- Authentication
+- Settings
+
+Create only the folders/files required for the architecture at this stage.
+
+Add minimal placeholder files where necessary.
+
+Do not implement business functionality yet.
+
+After implementation:
+- run TypeScript checking
+- run ESLint
+- run production build
+- report any issues
+
+Phase 4 — Financial Design System
+Claude Prompt 4
+Now implement the application's design system.
+
+The application is a professional stock screener and portfolio dashboard.
+
+Design direction:
+
+- Dark-first
+- Dark navy / charcoal surfaces
+- Professional financial application aesthetic
+- Subtle borders
+- High readability
+- Lots of whitespace
+- Green for positive financial values
+- Red for negative financial values
+- Neutral colors for unchanged values
+- Minimal gradients
+- Avoid excessive rounded cards
+- Avoid overly decorative UI
+- Avoid excessive shadows
+- Desktop-first but responsive
+
+Create a centralized MUI theme.
+
+The theme must define:
+
+- primary colors
+- background colors
+- surface colors
+- border colors
+- text colors
+- positive/negative/neutral financial colors
+- typography
+- spacing
+- border radius
+- component defaults where appropriate
+- focus states
+- hover states
+- disabled states
+
+Important:
+
+Do not hardcode colors throughout components.
+
+Financial colors must come from the theme/design system.
+
+Create reusable utilities/components for financial values where appropriate, for example:
+
+- positive value
+- negative value
+- percentage change
+- currency
+- number formatting
+
+Do not build application screens yet.
+
+Create a small theme-preview/demo page so I can visually inspect the design system.
+
+The demo should show:
+
+- headings
+- body text
+- buttons
+- inputs
+- tabs
+- tables
+- cards/surfaces
+- positive values
+- negative values
+- neutral values
+- loading state
+- error state
+
+Do not introduce unnecessary abstractions.
+
+Run:
+- TypeScript check
+- ESLint
+- production build
+
+Test
+Visually inspect the theme.
+
+If the visual direction isn't right, fix it before proceeding.
+
+Phase 5 — Application Shell
+Claude Prompt 5
+Now implement the application's main application shell.
+
+Create a professional financial dashboard layout.
+
+Desktop layout:
+
+┌─────────────────────────────────────────────────────┐
+│ Logo / App Name       Search       Notifications User│
+├──────────────┬──────────────────────────────────────┤
+│              │                                      │
+│ Dashboard    │                                      │
+│ Screener     │             Main Content             │
+│ Watchlist    │                                      │
+│ Portfolio    │                                      │
+│              │                                      │
+│ Settings     │                                      │
+│              │                                      │
+└──────────────┴──────────────────────────────────────┘
+
+Requirements:
+
+- MUI-based
+- Dark theme
+- Responsive
+- Persistent sidebar on desktop
+- Collapsible/navigation behavior
+- Mobile-friendly navigation
+- Top application bar
+- Active navigation state
+- Consistent spacing
+- No business logic in the layout components
+- Use React Router for navigation
+- Navigation configuration should be centralized rather than duplicated
+
+Initial routes:
+
+/dashboard
+/screener
+/watchlist
+/portfolio
+/settings
+
+Create placeholder pages for these routes.
+
+The shell should be reusable and should not contain stock-specific business logic.
+
+Do not implement the actual dashboard, screener or portfolio functionality yet.
+
+Run TypeScript, ESLint and production build.
+
+Test
+Test:
+
+Desktop
+
+Tablet
+
+Mobile
+
+Sidebar
+
+Navigation
+
+Active route
+
+Browser refresh
+
+Direct URL navigation
+
+Phase 6 — API Architecture
+Provide Claude with the actual .NET API contract before implementing feature APIs.
+
+Claude Prompt 6
+Now implement the frontend API architecture.
+
+Backend:
+- .NET Core Web API
+- REST API
+- SQL Server
+
+Use TanStack Query for server state.
+
+Architectural requirements:
+
+1. Do not call fetch/axios directly from React page components.
+2. Centralize HTTP configuration.
+3. Create a reusable API client.
+4. Configure the API base URL using Vite environment variables.
+5. Do not hardcode API URLs.
+6. Separate API transport from feature-specific query logic.
+7. Use TypeScript types for API request/response models.
+8. Handle HTTP errors consistently.
+9. Configure TanStack Query at the application root.
+10. Use sensible staleTime/cache/retry defaults.
+11. Do not introduce global state for server data that TanStack Query already manages.
+
+Environment example:
+
+VITE_API_BASE_URL=...
+
+Create the infrastructure required for:
+
+- API client
+- API error handling
+- TanStack Query provider
+- environment configuration
+
+Do not implement authentication yet.
+
+Do not implement stock-specific endpoints yet.
+
+Use the existing project architecture.
+
+Run TypeScript, ESLint and production build.
+
+Phase 7 — Dashboard
+Claude Prompt 7
+Implement the Dashboard page.
+
+The dashboard should feel like a professional financial application.
+
+It should eventually contain:
+
+1. Portfolio summary
+   - Total portfolio value
+   - Today's gain/loss
+   - Total gain/loss
+   - Percentage changes
+
+2. Portfolio performance chart
+
+3. Watchlist summary
+
+4. Top gainers
+
+5. Top losers
+
+6. Recent/important scanner results
+
+7. Market overview section
+
+For this iteration:
+
+- Use the existing API architecture.
+- Use TanStack Query for server data.
+- Do not put API calls directly in components.
+- Create feature-specific API functions/hooks.
+- Show proper loading skeletons.
+- Show proper error states.
+- Show useful empty states.
+- Use the centralized design system.
+- Use reusable financial value components.
+- Use the charting library chosen earlier.
+- Avoid unnecessary cards.
+- Keep the layout visually spacious.
+- Ensure positive/negative values are immediately understandable.
+
+Do not create fake API abstractions that won't map to the real API.
+
+If an endpoint is not yet available, use a clearly isolated mock/data adapter that can be replaced without changing the UI components.
+
+Keep business logic out of presentational components.
+
+Run TypeScript, ESLint and production build.
+
+Phase 8 — Stock Screener
+The Stock Screener is one of the application's primary features.
+
+Provide Claude with the actual scanner API request/response models.
+
+Claude Prompt 8
+Now implement the Stock Screener feature.
+
+This is one of the primary features of the application.
+
+The screener needs to support:
+
+- Search/filter criteria
+- Multiple filters
+- Sorting
+- Pagination if supported by the API
+- Refresh
+- Loading state
+- Empty state
+- Error state
+- Data grid
+- Row selection
+- Navigation to stock details
+
+Important architecture:
+
+- Keep filter state separate from server state.
+- Use URL query parameters for shareable/persistable screener state where appropriate.
+- Do not put all state into a global store.
+- Use TanStack Query for server results.
+- Debounce appropriate text inputs.
+- Avoid unnecessary API requests.
+- Keep filter components independent from the results grid.
+- Keep formatting logic out of the grid column definitions where practical.
+
+The data grid should support:
+
+- sortable columns
+- numeric alignment
+- percentage formatting
+- currency formatting
+- positive/negative colors
+- sticky/header behavior where appropriate
+- responsive behavior
+- sensible column widths
+
+The screener should be designed to accommodate additional filters in the future without requiring a rewrite.
+
+Use the real API contract I provide.
+
+Do not invent API fields.
+
+Run TypeScript, ESLint and production build.
+
+Phase 9 — Stock Details
+Claude Prompt 9
+Implement the Stock Details feature.
+
+Route:
+
+/stocks/:symbol
+
+The page should contain:
+
+- Stock symbol
+- Company name
+- Current price
+- Daily change
+- Percentage change
+- Key statistics
+- Price chart
+- Relevant financial metrics
+- Add/remove from watchlist
+- Navigation back to screener/watchlist
+
+Requirements:
+
+- Fetch data through TanStack Query.
+- Use the existing API client.
+- Create feature-specific query hooks.
+- Do not call APIs directly from page components.
+- Use route parameters properly.
+- Handle invalid/missing symbols.
+- Show loading skeletons.
+- Show error states.
+- Show empty states.
+- Use the centralized financial design system.
+- Positive/negative financial values must use theme-defined colors.
+- Keep the chart isolated as a reusable component.
+- Do not over-componentize simple elements.
+
+Do not add features not supported by the API.
+
+Run TypeScript, ESLint and production build.
+
+Phase 10 — Watchlist
+Claude Prompt 10
+Implement the Watchlist feature.
+
+Requirements:
+
+- Display watchlisted stocks
+- Current price
+- Daily change
+- Percentage change
+- Relevant scanner metrics
+- Remove from watchlist
+- Navigate to stock details
+- Refresh data
+- Loading states
+- Error states
+- Empty state
+
+Use:
+
+- TanStack Query
+- Existing API client
+- Existing financial formatting utilities
+- Existing DataGrid/table infrastructure
+- Existing design system
+
+Mutation requirements:
+
+- Use TanStack Query mutations.
+- Correctly invalidate/update affected queries after mutation.
+- Prevent duplicate submissions.
+- Provide user feedback for successful/failed mutations.
+
+Do not introduce Redux or another global state library.
+
+Run TypeScript, ESLint and production build.
+
+Phase 11 — Portfolio
+Claude Prompt 11
+Implement the Portfolio feature.
+
+The portfolio page should provide:
+
+- Portfolio summary
+- Total value
+- Today's gain/loss
+- Total gain/loss
+- Percentage returns
+- Holdings table
+- Quantity
+- Average cost
+- Current price
+- Market value
+- Unrealized gain/loss
+- Unrealized percentage
+- Allocation where supported
+
+Use a professional financial data-grid presentation.
+
+Requirements:
+
+- Correct numeric formatting
+- Correct currency formatting
+- Correct percentage formatting
+- Positive/negative financial colors
+- Loading skeletons
+- Error states
+- Empty state
+- Responsive behavior
+
+Use TanStack Query for portfolio data.
+
+Do not calculate values in the UI if the API already provides authoritative values.
+
+If calculations are required, isolate them in pure functions and unit-test them.
+
+Keep UI components presentational.
+
+Run TypeScript, ESLint and production build.
+
+Phase 12 — Portfolio History
+Claude Prompt 12
+Implement Portfolio History.
+
+Display portfolio performance over time.
+
+Requirements:
+
+- Historical portfolio value chart
+- Configurable time range if supported
+- Performance metrics
+- Loading state
+- Error state
+- Empty state
+- Responsive chart
+- Professional financial visualization
+
+Use the existing charting library.
+
+Important:
+
+- Keep chart configuration separate from API fetching.
+- Transform API data in a dedicated pure function.
+- Do not perform complex data transformation inside JSX.
+- Handle missing/null historical points safely.
+- Correctly handle dates/time zones.
+- Ensure the chart is readable in the dark theme.
+- Avoid excessive visual decoration.
+
+Use TanStack Query.
+
+Run TypeScript, ESLint and production build.
+
+Phase 13 — Authentication
+Authentication should be implemented after the main application functionality is working.
+
+Claude Prompt 13
+Now implement authentication.
+
+Authentication provider:
+Microsoft Entra External ID.
+
+Requirements:
+
+- Use OAuth 2.0 / OpenID Connect through the appropriate Microsoft-supported React authentication library.
+- Do not implement authentication manually.
+- Do not store passwords.
+- Do not store client secrets in the frontend.
+- Use environment configuration for client/application identifiers.
+- Protect authenticated routes.
+- Handle login/logout.
+- Handle token acquisition.
+- Configure authenticated API requests.
+- Handle expired/invalid authentication gracefully.
+
+Architecture requirements:
+
+- Authentication concerns must be isolated from business features.
+- API client should be able to attach access tokens without individual components knowing how authentication works.
+- Components should consume an application-level authentication abstraction rather than directly implementing token logic.
+- Do not spread Entra-specific code throughout the application.
+
+Create:
+
+- authentication provider
+- authentication hook/service
+- protected route mechanism
+- login/logout UI
+- authenticated API integration
+
+Do not change existing business feature architecture unnecessarily.
+
+Run TypeScript, ESLint and production build.
+
+Phase 14 — Testing
+Claude Prompt 14
+Now add a production-quality frontend testing strategy.
+
+Use an appropriate modern React testing stack.
+
+Focus on testing:
+
+1. Financial formatting utilities
+2. Financial calculations
+3. Screener filter logic
+4. Screener state behavior
+5. Important reusable components
+6. Dashboard behavior
+7. Portfolio behavior
+8. Watchlist mutations
+9. Loading states
+10. Error states
+11. Empty states
+12. Authentication guards
+
+Important:
+
+- Prefer behavior-focused tests.
+- Avoid testing implementation details.
+- Avoid excessive snapshot testing.
+- Do not make tests dependent on real production APIs.
+- Mock API/network behavior appropriately.
+- Keep tests deterministic.
+
+Add appropriate npm scripts.
+
+Run:
+- unit tests
+- TypeScript
+- ESLint
+- production build
+
+Report the results.
+
+Phase 15 — Production Architecture Review
+Claude Prompt 15
+Act as a senior React architect reviewing this application before production release.
+
+Do NOT immediately modify the code.
+
+First inspect the entire frontend project.
+
+Review:
+
+1. Folder architecture
+2. Component architecture
+3. State management
+4. TanStack Query usage
+5. API architecture
+6. Authentication architecture
+7. TypeScript quality
+8. Error handling
+9. Loading states
+10. Empty states
+11. MUI usage
+12. Theme consistency
+13. Accessibility
+14. Responsive design
+15. Data-grid implementation
+16. Chart implementation
+17. Performance
+18. Unnecessary re-renders
+19. Code duplication
+20. Security concerns
+21. Environment configuration
+22. Testing
+23. Build/deployment configuration
+
+Pay particular attention to:
+
+- components becoming too large
+- business logic inside UI components
+- API calls inside components
+- inappropriate global state
+- duplicated API logic
+- duplicated formatting logic
+- hardcoded colors
+- hardcoded API URLs
+- Entra-specific code leaking into business features
+- unnecessary abstractions
+- premature abstractions
+- poor TypeScript types
+- useEffect used where TanStack Query should be used
+- incorrect query invalidation
+- unnecessary useMemo/useCallback
+- accessibility problems
+
+Produce a prioritized list:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+
+For each issue explain:
+- why it is a problem
+- recommended solution
+- affected files
+
+DO NOT modify anything yet.
+
+I will review the recommendations before asking you to implement them.
+
+4. CLAUDE.md
+Create a CLAUDE.md file at the root of the repository.
+
+This file should contain the permanent architectural rules that Claude must follow.
+
+Recommended CLAUDE.md
+# Stock Screener Frontend
+
+## Project
+
+Production React frontend for a stock screener and portfolio application.
+
+## Stack
+
+- React
+- TypeScript
+- Vite
+- MUI
+- TanStack Query
+- React Router
+- Financial DataGrid
+- Charting library
+- .NET Core Web API backend
+- SQL Server database
+
+## Architecture
+
+Use feature-oriented architecture.
+
+Business functionality belongs inside feature modules.
+
+Shared components must remain business-agnostic.
+
+API communication must not be implemented directly inside React page components.
+
+TanStack Query manages server state.
+
+Do not introduce Redux or another global state solution unless explicitly requested.
+
+## TypeScript
+
+Use strict TypeScript.
+
+Avoid `any`.
+
+Do not disable TypeScript errors without a strong reason.
+
+Prefer explicit domain types.
+
+Do not duplicate types unnecessarily.
+
+## API
+
+Never hardcode API URLs.
+
+Use environment variables.
+
+Do not call fetch/axios directly from page components.
+
+Use the centralized API client.
+
+Do not invent API fields.
+
+Use the actual backend API contract.
+
+## TanStack Query
+
+Use TanStack Query for server state.
+
+Do not duplicate server state into global state.
+
+Use appropriate query keys.
+
+Invalidate/update queries correctly after mutations.
+
+Avoid unnecessary requests.
+
+## UI
+
+Use MUI components.
+
+Use the centralized theme.
+
+Do not hardcode colors.
+
+Financial colors must come from theme tokens.
+
+Positive values use the positive financial color.
+
+Negative values use the negative financial color.
+
+Neutral values use the neutral financial color.
+
+## Design
+
+Dark-first financial dashboard.
+
+Use:
+
+- dark navy
+- charcoal
+- subtle borders
+- strong readability
+- generous whitespace
+
+Avoid:
+
+- excessive gradients
+- excessive rounded cards
+- excessive shadows
+- decorative UI that does not improve usability
+
+## Components
+
+Keep components focused.
+
+Avoid extremely large components.
+
+Avoid premature abstraction.
+
+Do not create generic components unless there is a real reuse case.
+
+Keep business logic out of presentational components.
+
+## Authentication
+
+Authentication is handled through Microsoft Entra External ID.
+
+Keep authentication-provider-specific implementation isolated.
+
+Do not spread Entra-specific implementation throughout business features.
+
+Never store client secrets in frontend code.
+
+## Formatting
+
+Centralize financial formatting.
+
+Examples:
+
+- currency
+- percentage
+- price
+- volume
+- market capitalization
+- dates
+
+## Testing
+
+Prefer behavior-focused tests.
+
+Avoid implementation-detail testing.
+
+Avoid excessive snapshots.
+
+Do not depend on real production APIs during tests.
+
+## Before finishing any task
+
+Run:
+
+1. TypeScript
+2. ESLint
+3. Tests where applicable
+4. Production build
+
+Do not modify unrelated files.
+
+Explain architectural changes before making large changes.
+
+Do not add dependencies without explaining why they are needed.
+
+5. Git Commit Strategy
+After each successful phase, commit the changes.
+
+Example:
+
+feat: establish frontend foundation
+feat: add frontend architecture
+feat: add financial design system
+feat: add application shell
+feat: add API infrastructure
+feat: add dashboard
+feat: add stock screener
+feat: add stock details
+feat: add watchlist
+feat: add portfolio
+feat: add portfolio history
+feat: add authentication
+test: add frontend test coverage
+chore: production architecture review
+
+This provides a clean rollback point after every major phase.
+
+6. Recommended Final Architecture
+The target architecture should eventually look approximately like:
+
+React Application
+│
+├── App Infrastructure
+│   ├── Router
+│   ├── Providers
+│   ├── Theme
+│   └── Application Layout
+│
+├── Features
+│   │
+│   ├── Dashboard
+│   │   ├── API
+│   │   ├── Components
+│   │   ├── Hooks
+│   │   ├── Pages
+│   │   └── Types
+│   │
+│   ├── Screener
+│   │   ├── API
+│   │   ├── Components
+│   │   ├── Hooks
+│   │   ├── Pages
+│   │   ├── Types
+│   │   └── Utils
+│   │
+│   ├── Stocks
+│   │   ├── API
+│   │   ├── Components
+│   │   ├── Hooks
+│   │   ├── Pages
+│   │   └── Types
+│   │
+│   ├── Watchlist
+│   │   ├── API
+│   │   ├── Components
+│   │   ├── Hooks
+│   │   └── Pages
+│   │
+│   ├── Portfolio
+│   │   ├── API
+│   │   ├── Components
+│   │   ├── Hooks
+│   │   ├── Pages
+│   │   └── Utils
+│   │
+│   └── Auth
+│       ├── Components
+│       ├── Hooks
+│       └── Services
+│
+├── Shared
+│   ├── Components
+│   ├── Hooks
+│   ├── Formatting
+│   └── Types
+│
+└── API
+    ├── Client
+    └── Types
+
+The most important architectural rule is:
+
+             ┌──────────────┐
+             │     App      │
+             └──────┬───────┘
+                    │
+       ┌────────────┼────────────┐
+       ▼            ▼            ▼
+   Dashboard    Screener     Portfolio
+       │            │            │
+       └────────────┼────────────┘
+                    ▼
+             TanStack Query
+                    │
+                    ▼
+               API Client
+                    │
+                    ▼
+              .NET Core API
+                    │
+                    ▼
+                SQL Server
+
+Keep the frontend feature-oriented, strongly typed, API-independent at the UI layer, and server-state driven through TanStack Query.
+
+7. Development Philosophy
+The goal is not to create the largest or most abstract architecture.
+
+The goal is:
+
+Simple + predictable + strongly typed + testable + maintainable.
+
+Avoid:
+
+Premature abstraction
+
+Global state for everything
+
+Huge components
+
+Generic utility dumping grounds
+
+API calls inside components
+
+Hardcoded configuration
+
+Hardcoded colors
+
+Duplicate business logic
+
+Excessive useEffect
+
+Excessive useMemo
+
+Excessive useCallback
+
+Unnecessary dependencies
+
+Prefer:
+
+Feature modules
+
+Small focused components
+
+TanStack Query for server state
+
+URL state where appropriate
+
+Pure functions for calculations
+
+Centralized formatting
+
+Centralized theme
+
+Strong TypeScript types
+
+Behavior-focused tests
+
+Clear API boundaries
+
+8. Recommended Development Order
+The complete development sequence is:
+
+1.  Analyse existing Vite project
+        ↓
+2.  Install/configure dependencies
+        ↓
+3.  Establish folder architecture
+        ↓
+4.  Build MUI financial design system
+        ↓
+5.  Build application shell
+        ↓
+6.  Build API infrastructure
+        ↓
+7.  Build Dashboard
+        ↓
+8.  Build Stock Screener
+        ↓
+9.  Build Stock Details
+        ↓
+10. Build Watchlist
+        ↓
+11. Build Portfolio
+        ↓
+12. Build Portfolio History
+        ↓
+13. Add Authentication
+        ↓
+14. Add automated tests
+        ↓
+15. Production architecture review
+        ↓
+16. Production deployment
+
+The Stock Screener, Stock Details, Portfolio, and Portfolio History screens should receive the most design attention because they are the core of the product.
+
+The final application should feel like a professional financial analytics product, not a generic CRUD dashboard.
