@@ -15,7 +15,8 @@ export function AppProviders({ children }: { children: ReactNode }) {
         {children}
         <NotificationHost />
       </ThemeProvider>
-      {import.meta.env.DEV && <ReactQueryDevtools buttonPosition="bottom-left" />}
+      {/* Top right keeps the toggle clear of the sidebar footer and the phone bottom navigation. */}
+      {import.meta.env.DEV && <ReactQueryDevtools buttonPosition="top-right" />}
     </QueryClientProvider>
   )
 }

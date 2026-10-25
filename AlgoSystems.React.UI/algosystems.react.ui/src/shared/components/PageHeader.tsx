@@ -4,27 +4,31 @@ import type { ReactNode } from 'react'
 
 interface PageHeaderProps {
   title: string
-  description?: ReactNode
   actions?: ReactNode
 }
 
-export function PageHeader({ title, description, actions }: PageHeaderProps) {
+export function PageHeader({ title, actions }: PageHeaderProps) {
   return (
     <Stack
-      direction={{ xs: 'column', sm: 'row' }}
-      spacing={2}
-      sx={{ justifyContent: 'space-between', alignItems: { xs: 'stretch', sm: 'flex-end' }, mb: 3 }}
+      direction={{ xs: 'column', md: 'row' }}
+      sx={{
+        alignItems: { xs: 'stretch', md: 'center' },
+        justifyContent: 'space-between',
+        gap: { xs: '12px', md: '18px' },
+        mb: { xs: '17px', md: '20px' },
+      }}
     >
-      <div>
-        <Typography variant="h1">{title}</Typography>
-        {description && (
-          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
-            {description}
-          </Typography>
-        )}
-      </div>
+      <Typography variant="h1">{title}</Typography>
       {actions && (
-        <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexShrink: 0 }}>
+        <Stack
+          direction="row"
+          sx={{
+            gap: '9px',
+            flexWrap: 'wrap',
+            // On phones the actions fill the row, sharing it equally.
+            '& > .MuiButton-root': { flex: { xs: 1, md: 'none' } },
+          }}
+        >
           {actions}
         </Stack>
       )}

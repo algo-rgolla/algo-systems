@@ -1,7 +1,6 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import type { GridColDef } from '@mui/x-data-grid'
 import { SignedValue } from '@/shared/components/SignedValue'
+import { TwoLineCell } from '@/shared/components/TwoLineCell'
 import {
   formatCompact,
   formatCurrency,
@@ -36,23 +35,10 @@ function numberColumn(
 export const stockColumns = {
   symbol: {
     field: 'symbol',
-    headerName: 'Symbol',
+    headerName: 'Stock',
     minWidth: 200,
     flex: 1,
-    renderCell: ({ row }) => (
-      <Box
-        sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}
-      >
-        <Typography variant="body2" sx={{ fontWeight: 600, lineHeight: 1.25 }}>
-          {row.symbol}
-        </Typography>
-        {row.name && (
-          <Typography variant="caption" noWrap sx={{ color: 'text.secondary', lineHeight: 1.25 }}>
-            {row.name}
-          </Typography>
-        )}
-      </Box>
-    ),
+    renderCell: ({ row }) => <TwoLineCell primary={row.symbol} secondary={row.name} />,
   } satisfies Column,
 
   sector: {

@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
@@ -6,31 +5,34 @@ import type { ReactNode } from 'react'
 
 interface PanelProps {
   title?: string
+  /** Shown on the right of the header row, e.g. a "View all" link. */
   actions?: ReactNode
   children: ReactNode
 }
 
-/** A flat, bordered section with an optional header row. */
+/** A gradient card section with an optional header row. */
 export function Panel({ title, actions, children }: PanelProps) {
   return (
-    <Paper variant="outlined" component="section">
+    <Paper variant="panel" component="section" sx={{ p: { xs: '12px', sm: '14px', md: '18px' } }}>
       {(title || actions) && (
         <Stack
           direction="row"
           sx={{
             alignItems: 'center',
             justifyContent: 'space-between',
-            px: 2,
-            minHeight: 44,
-            borderBottom: 1,
-            borderColor: 'divider',
+            gap: '12px',
+            mb: { xs: '11px', md: '15px' },
           }}
         >
-          {title && <Typography variant="h3">{title}</Typography>}
+          {title && (
+            <Typography variant="h3" component="h2">
+              {title}
+            </Typography>
+          )}
           {actions}
         </Stack>
       )}
-      <Box sx={{ p: 2 }}>{children}</Box>
+      {children}
     </Paper>
   )
 }

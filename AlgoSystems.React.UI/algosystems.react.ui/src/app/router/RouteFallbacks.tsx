@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { isRouteErrorResponse, Link as RouterLink, useRouteError } from 'react-router'
+import { LoadingState } from '@/shared/components/LoadingState'
 
 function Fallback({ title, message }: { title: string; message: string }) {
   return (
@@ -21,6 +22,11 @@ function Fallback({ title, message }: { title: string; message: string }) {
       </div>
     </Box>
   )
+}
+
+/** Shown while the first page's code loads. */
+export function AppLoading() {
+  return <LoadingState label="Loading Algo Systems" minHeight={320} />
 }
 
 export function NotFoundPage() {
