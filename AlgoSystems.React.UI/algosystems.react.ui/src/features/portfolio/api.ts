@@ -1,89 +1,53 @@
-import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { httpClient } from '@/api/client/httpClient'
-import type { ProductsDto, StatisticsResponseDto } from '@/api/types/dtos'
+import type { AlgoProductRequestDto, ProductsDto } from '@/api/types/dtos'
 import { toStockRows } from '@/features/stocks/model'
 
-/** Realised/unrealised P&L for a strategy portfolio, signed. */
-export interface PortfolioStatistics {
-  realisedProfit: number
-  realisedLoss: number
-  unrealisedProfit: number
-  unrealisedLoss: number
-  realisedNet: number
-  unrealisedNet: number
+/** Manually recorded trades (the AlgoPortfolios table), separate from strategy portfolios. */
+export const tradeKeys = {
+  all: ['trades'] as const,
+  open: () => [...tradeKeys.all, 'open'] as const,
+  closed: () => [...tradeKeys.all, 'closed'] as const,
 }
 
-export const portfolioKeys = {
-  all: ['portfolio'] as const,
-  strategy: (scanType: string) => [...portfolioKeys.all, scanType] as const,
-  positions: (scanType: string) => [...portfolioKeys.strategy(scanType), 'positions'] as const,
-  history: (scanType: string) => [...portfolioKeys.strategy(scanType), 'history'] as const,
-  statistics: (scanType: string) => [...portfolioKeys.strategy(scanType), 'statistics'] as const,
-}
-
-function toStatistics(dto: StatisticsResponseDto): PortfolioStatistics {
-  // The API returns absolute values keyed by label; restore the signs here.
-  const byLabel = new Map((dto.statistics ?? []).map((s) => [s.statisticLabel, s.statisticValue]))
-  const realisedProfit = byLabel.get('Realised Profit') ?? 0
-  const realisedLoss = -(byLabel.get('Realised Loss') ?? 0)
-  const unrealisedProfit = byLabel.get('Current Profit') ?? 0
-  const unrealisedLoss = -(byLabel.get('Current Loss') ?? 0)
-
-  return {
-    realisedProfit,
-    realisedLoss,
-    unrealisedProfit,
-    unrealisedLoss,
-    realisedNet: realisedProfit + realisedLoss,
-    unrealisedNet: unrealisedProfit + unrealisedLoss,
-  }
-}
-
-export const portfolioStatisticsQuery = (scanType: string) =>
-  queryOptions({
-    queryKey: portfolioKeys.statistics(scanType),
-    queryFn: ({ signal }) =>
-      httpClient.get<StatisticsResponseDto>('/api/Portfolio/portfolio-statistics', {
-        query: { scanName: scanType },
-        signal,
-      }),
-    select: toStatistics,
-  })
-
-export function usePortfolioStatistics(scanType: string) {
-  return useQuery(portfolioStatisticsQuery(scanType))
-}
-
-export function useOpenPositions(scanType: string) {
+export function useOpenTrades() {
   return useQuery({
-    queryKey: portfolioKeys.positions(scanType),
+    queryKey: tradeKeys.open(),
     queryFn: ({ signal }) =>
-      httpClient.get<ProductsDto>('/api/Portfolio/portfolio-list', {
-        query: { scanName: scanType },
+      httpClient.get<ProductsDto>('/api/AlgoPortfolio/algo-portfolio-list', { signal }),
+    select: toStockRows,
+  })
+}
+
+export function useClosedTrades() {
+  return useQuery({
+    queryKey: tradeKeys.closed(),
+    queryFn: ({ signal }) =>
+      httpClient.get<ProductsDto>('/api/AlgoPortfolio/algo-portfolio-history', {
+        // Required by the endpoint's model binding but not used for filtering.
+        query: { scanName: 'Algo_Portfolio' },
         signal,
       }),
     select: toStockRows,
   })
 }
 
-export function useClosedPositions(scanType: string) {
-  return useQuery({
-    queryKey: portfolioKeys.history(scanType),
-    queryFn: ({ signal }) =>
-      httpClient.get<ProductsDto>('/api/eodhd/portfoliohistory', {
-        query: { scanName: scanType },
-        signal,
-      }),
-    select: toStockRows,
-  })
-}
-
-export function useDeleteClosedPosition(scanType: string) {
+export function useSaveTrade() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (portfolioId: number) =>
-      httpClient.delete<boolean>(`/api/portfoliohistory/delete/${portfolioId}`),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: portfolioKeys.strategy(scanType) }),
+    mutationFn: (trade: AlgoProductRequestDto) =>
+      httpClient.post<string>('/api/AlgoPortfolio/add-edit-algo-portfolio', trade),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: tradeKeys.all }),
+  })
+}
+
+export function useDeleteTrade() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (algoPortfolioId: number) =>
+      httpClient.delete<string>(`/api/AlgoPortfolio/delete-algo-portfolio/${algoPortfolioId}`),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: tradeKeys.all }),
   })
 }
