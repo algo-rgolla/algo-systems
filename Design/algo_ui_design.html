@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b1020">
+<title>MarketDesk — Professional Dark Layout</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--surface:#111a2b;--surface2:#162238;--surface3:#1b2942;--line:#293750;--text:#edf2fb;--muted:#94a3b8;--primary:#91a0ff;--green:#4cdbab;--red:#ff8194;--amber:#f3c36d;--radius:15px;font-family:Inter,Roboto,"Segoe UI",Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-size:14px}button,input,select{font:inherit}button{cursor:pointer}.shell{min-height:100vh}.topbar{height:72px;padding:0 26px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);background:#0d1423;position:sticky;top:0;z-index:10}.brand{font-weight:850;font-size:18px;letter-spacing:.3px;white-space:nowrap}.brand-mark{color:var(--primary);margin-right:8px}.brand span:last-child{color:var(--primary)}.top-right{display:flex;align-items:center;gap:12px}.status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#273657;color:#dce3ff;font-weight:700}.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:calc(100vh - 72px)}.sidebar{background:#0d1423;border-right:1px solid var(--line);padding:23px 14px;display:flex;flex-direction:column}.nav-caption{color:#70819e;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:750;padding:0 12px 12px}.nav{border:0;background:transparent;color:#aab6ca;text-align:left;width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:10px;margin:3px 0;font-size:13px}.nav:hover{background:#17243a;color:white}.nav.active{background:#28365b;color:white;box-shadow:inset 3px 0 var(--primary)}.nav-icon{width:20px;text-align:center;font-size:17px}.sidebar-bottom{margin-top:auto;padding:17px 11px 0;border-top:1px solid var(--line);color:#7788a3;font-size:11px;line-height:1.7}.demo-pill{display:inline-block;color:var(--green);background:#17382f;padding:4px 8px;border-radius:20px;margin-top:8px}.main{width:100%;max-width:1600px;margin:0 auto;padding:29px 30px 48px;min-width:0}.page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:23px}.eyebrow{font-size:10px;color:var(--primary);text-transform:uppercase;letter-spacing:1.6px;font-weight:750}.page-title{font-size:28px;letter-spacing:-.6px;margin:6px 0 5px;font-weight:780}.page-desc{font-size:13px;color:var(--muted);line-height:1.5}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid #34435e;background:#18253b;color:#e6edfb;padding:10px 13px;border-radius:9px;font-size:12px;white-space:nowrap}.btn:hover{filter:brightness(1.12)}.btn.primary{background:var(--primary);color:#10162a;border-color:var(--primary);font-weight:750}.grid{display:grid;gap:16px;min-width:0}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}.two{grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);margin-bottom:16px}.panel,.stat{min-width:0;background:linear-gradient(145deg,#151f33,#111a2a);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 9px 25px #00000012}.stat-label{font-size:12px;color:#a3b0c4}.stat-value{font-size:25px;font-weight:780;letter-spacing:-.5px;margin:12px 0 7px;overflow-wrap:anywhere}.positive{color:var(--green)}.negative{color:var(--red)}.muted{color:var(--muted)}.small{font-size:11px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.panel-title{font-weight:750;font-size:14px}.panel-link{border:0;background:transparent;color:var(--primary);font-size:11px;white-space:nowrap}.chart{height:205px;width:100%;overflow:hidden;border-radius:9px;background:linear-gradient(180deg,#91a0ff12,transparent)}.chart svg{width:100%;height:100%;display:block}.legend{display:flex;gap:15px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:11px}.legend-dot{width:7px;height:7px;border-radius:50%;background:var(--primary);display:inline-block;margin-right:5px}.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #253149}.row:first-child{padding-top:3px}.row:last-child{border-bottom:0;padding-bottom:2px}.right{text-align:right}.ticker{font-weight:780;letter-spacing:.15px}.company{display:block;color:#8999b2;font-size:10px;margin-top:4px}.pill{display:inline-flex;align-items:center;border-radius:99px;padding:5px 8px;background:#193b37;color:#67e2b8;font-size:10px;white-space:nowrap}.pill.warn{background:#493a24;color:var(--amber)}.pill.bad{background:#452733;color:#ff9aac}.table-wrap{width:100%;overflow-x:auto;border-radius:9px;overscroll-behavior-x:contain}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th{text-align:left;color:#8fa0b9;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.6px;padding:12px 10px;border-bottom:1px solid #2a3850}td{padding:13px 10px;border-bottom:1px solid #202c40}tbody tr:hover{background:#ffffff05}tr:last-child td{border-bottom:0}.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}.input{background:#0d1525;border:1px solid #2a3850;color:#d8e1f2;padding:10px 12px;border-radius:9px;font-size:12px;min-width:150px;max-width:100%}.watch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.watch-card{background:#121d30;border:1px solid #293851;border-radius:13px;padding:16px;min-width:0}.watch-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.asset{display:flex;align-items:center;gap:10px;min-width:0}.coin{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:11px;background:#263451;color:#c4ceff;font-weight:800;font-size:11px}.watch-price{font-size:23px;font-weight:780;margin:17px 0 5px;letter-spacing:-.5px}.spark{height:34px;margin:12px 0}.spark svg{height:100%;width:100%}.bar{height:6px;border-radius:8px;background:#283650;overflow:hidden}.bar span{display:block;height:100%;background:var(--primary);border-radius:8px}.section-gap{margin-top:16px}.empty-note{color:var(--muted);font-size:11px;margin-top:17px}
+.scan-type-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.scan-type{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:8px;min-width:0;padding:17px;border:1px solid #293851;border-radius:13px;background:#121d30;color:var(--text);cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.scan-type:hover{border-color:#596ba5;transform:translateY(-1px)}
+.scan-type.selected{border-color:var(--primary);background:linear-gradient(145deg,#29365a,#151f33);box-shadow:inset 0 0 0 1px #91a0ff35}
+.scan-type-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#263451;color:var(--primary);font-size:21px}
+.scan-type-kicker{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px}
+.scan-type-name{font-size:15px;font-weight:780}
+.scan-type-desc{color:#a3b0c4;font-size:11px;line-height:1.5;min-height:34px}
+.scan-type-bottom{display:flex;justify-content:space-between;gap:10px;align-items:center;width:100%;padding-top:10px;margin-top:3px;border-top:1px solid #293750;color:var(--muted);font-size:10px}
+.scan-type-bottom span{color:var(--primary);font-size:17px}
+@media(max-width:1100px){.scan-type-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.scan-type{padding:13px}.scan-type-grid{gap:9px}.scan-type-desc{min-height:0}.scan-type-name{font-size:14px}}
+
+.mobile-nav{display:none}
+@media(max-width:1100px){.app{grid-template-columns:205px minmax(0,1fr)}.main{padding:23px 20px 38px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:minmax(0,1fr)}.watch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){body{font-size:13px}.topbar{height:60px;padding:0 15px}.brand{font-size:16px}.status{display:none}.app{display:block;min-height:calc(100vh - 60px)}.sidebar{display:none}.main{padding:20px 14px 94px}.page-heading{gap:12px;flex-direction:column;margin-bottom:17px}.heading-row{width:100%}.page-title{font-size:25px}.page-desc{font-size:12px}.actions{width:100%}.actions .btn{flex:1}.stats{gap:10px;margin-bottom:12px}.stat{padding:13px;border-radius:12px}.stat-label{font-size:11px}.stat-value{font-size:21px;margin:9px 0 6px}.panel{padding:14px;border-radius:13px}.grid{gap:12px}.two{gap:12px;margin-bottom:12px}.panel-head{margin-bottom:11px}.panel-title{font-size:13px}.chart{height:165px}.legend{gap:9px}.table-wrap{margin-right:-2px}table{font-size:11px}th{padding:10px 9px;font-size:9px}td{padding:11px 9px}.company{font-size:10px}.filters{display:grid;grid-template-columns:1fr 1fr}.filters .input:first-child{grid-column:1/-1;width:100%}.filters .btn{width:100%}.watch-grid{grid-template-columns:1fr;gap:10px}.watch-card{padding:14px}.watch-price{font-size:22px}.mobile-nav{position:fixed;z-index:20;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 7px max(7px,env(safe-area-inset-bottom));background:#0d1423f5;border-top:1px solid #2a3850;backdrop-filter:blur(14px)}.mobile-nav .nav{margin:0;display:flex;flex-direction:column;gap:4px;justify-content:center;align-items:center;text-align:center;padding:7px 1px;border-radius:9px;font-size:9px;min-width:0;min-height:49px}.mobile-nav .nav-icon{font-size:17px;width:auto}.mobile-nav .nav.active{box-shadow:none;background:#263353;color:#fff}.mobile-nav .nav.active .nav-icon{color:var(--primary)}.empty-note{line-height:1.5}}
+@media(max-width:380px){.main{padding-left:10px;padding-right:10px}.topbar{padding:0 11px}.stats{gap:8px}.stat{padding:11px}.stat-value{font-size:19px}.page-title{font-size:23px}.btn{padding:9px 10px}.panel{padding:12px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brand-mark">◈</span>MARKET<span>DESK</span></div><div class="top-right"><div class="status"><span class="dot"></span> Demo workspace · Illustrative data</div><button class="btn" id="refreshBtn" aria-label="Refresh overview">↻ Refresh</button><div class="avatar" aria-label="User profile">U</div></div></header>
+<div class="app"><aside class="sidebar"><div class="nav-caption">Workspace</div><nav id="desktopNav"><button class="nav active" data-page="Dashboard"><span class="nav-icon">▦</span>Dashboard</button><button class="nav" data-page="Portfolio"><span class="nav-icon">◫</span>Portfolio</button><button class="nav" data-page="PortfolioHistory"><span class="nav-icon">↗</span>Portfolio History</button><button class="nav" data-page="Scans"><span class="nav-icon">⌕</span>Stock Scans</button><button class="nav" data-page="Watchlist"><span class="nav-icon">☆</span>Watchlist</button></nav><div class="sidebar-bottom">MARKETDESK<br>Stock research workspace<br><span class="demo-pill">● Demo mode</span><p>Responsive professional layout</p></div></aside><main class="main" id="content" aria-live="polite"></main></div>
+<nav class="mobile-nav" id="mobileNav" aria-label="Main navigation"><button class="nav active" data-page="Dashboard"><span class="nav-icon">▦</span>Dashboard</button><button class="nav" data-page="Portfolio"><span class="nav-icon">◫</span>Portfolio</button><button class="nav" data-page="PortfolioHistory"><span class="nav-icon">↗</span>Portfolio History</button><button class="nav" data-page="Scans"><span class="nav-icon">⌕</span>Stock Scans</button><button class="nav" data-page="Watchlist"><span class="nav-icon">☆</span>Watchlist</button></nav>
+<script>
+const stocks=[['NVDA','NVIDIA','$182.42','+2.84%','Semiconductors'],['MSFT','Microsoft','$524.18','+0.92%','Software'],['GOOGL','Alphabet','$248.70','+1.35%','Internet'],['AVGO','Broadcom','$371.22','−0.44%','Semiconductors'],['TSM','TSMC','$298.50','+1.72%','Semiconductors'],['AMAT','Applied Materials','$226.10','+0.76%','Semiconductors'],['PANW','Palo Alto Networks','$205.82','−0.31%','Cybersecurity']];let currentPage='Dashboard';
+const isUp=s=>s[3].startsWith('+');
+function stat(label,value,delta,cls='positive'){return `<div class="stat"><div class="stat-label">${label}</div><div class="stat-value">${value}</div><div class="small ${cls}">${delta}</div></div>`}
+function panel(title,body,action='View all'){return `<section class="panel"><div class="panel-head"><div class="panel-title">${title}</div><button class="panel-link" data-go="${action==='Portfolio'?'Portfolio':action==='All scans'?'Scans':'Watchlist'}">${action} ↗</button></div>${body}</section>`}
+function heading(title,desc,button='＋ Add new'){return `<div class="page-heading"><div class="heading-row"><div class="eyebrow">Workspace / ${title}</div><h1 class="page-title">${title}</h1><div class="page-desc">${desc}</div></div><div class="actions"><button class="btn primary" data-action="${button}">${button}</button></div></div>`}
+function table(rows=stocks,scan=false){return `<div class="table-wrap"><table><thead><tr><th>Stock</th><th>Price</th><th>Day change</th>${scan?'<th>RSI</th><th>Score</th><th>Signal</th>':'<th>Sector</th>'}</tr></thead><tbody>${rows.map((s,i)=>`<tr><td><span class="ticker">${s[0]}</span><span class="company">${s[1]}</span></td><td>${s[2]}</td><td class="${isUp(s)?'positive':'negative'}">${s[3]}</td>${scan?`<td>${[34,41,38,46,29,36,43][i%7]}</td><td class="positive">${[9.4,8.8,9.1,8.7,9.2,8.6,8.5][i%7].toFixed(1)}/10</td><td><span class="pill">Strong</span></td>`:`<td class="muted">${s[4]}</td>`}</tr>`).join('')}</tbody></table></div>`}
+function chart(){return `<div class="chart"><svg viewBox="0 0 700 205" preserveAspectRatio="none" role="img" aria-label="Illustrative rising portfolio performance chart"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#91a0ff" stop-opacity=".27"/><stop offset="1" stop-color="#91a0ff" stop-opacity="0"/></linearGradient></defs>${[35,78,121,164].map(y=>`<line x1="0" y1="${y}" x2="700" y2="${y}" stroke="#293750" stroke-dasharray="4 5"/>`).join('')}<path d="M0 166 L35 150 L70 155 L105 126 L140 135 L175 103 L210 115 L245 85 L280 96 L315 66 L350 83 L385 72 L420 88 L455 52 L490 61 L525 39 L560 55 L595 32 L630 43 L665 20 L700 28 L700 205 L0 205Z" fill="url(#chartFill)"/><path d="M0 166 L35 150 L70 155 L105 126 L140 135 L175 103 L210 115 L245 85 L280 96 L315 66 L350 83 L385 72 L420 88 L455 52 L490 61 L525 39 L560 55 L595 32 L630 43 L665 20 L700 28" fill="none" stroke="#91a0ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`}
+function dashboard(){return `${heading('Dashboard','Your portfolio, market overview and latest stock signals.','↻ Refresh overview')}<div class="grid stats">${stat('Portfolio value','$248,650','↗ 3.82% this month')}${stat('Today’s P/L','+$1,284','+0.52% today')}${stat('Open positions','12','Across 4 sectors','')}${stat('Active scan signals','08','3 new since last scan','')}</div><div class="grid two"><section class="panel"><div class="panel-head"><div class="panel-title">Portfolio performance</div><button class="panel-link">1M ▾</button></div>${chart()}<div class="legend"><span><i class="legend-dot"></i>Portfolio</span><span>Benchmark: S&amp;P 500</span><span class="positive">+3.82%</span></div></section><section class="panel"><div class="panel-head"><div class="panel-title">Market pulse</div><button class="panel-link" data-go="Scans">Market details ↗</button></div><div class="row"><div><div class="ticker">S&amp;P 500</div><div class="small muted">US large caps</div></div><div class="right"><div class="ticker">6,742.18</div><div class="small positive">+0.64%</div></div></div><div class="row"><div><div class="ticker">NASDAQ</div><div class="small muted">Technology</div></div><div class="right"><div class="ticker">22,914.60</div><div class="small positive">+1.12%</div></div></div><div class="row"><div><div class="ticker">ASX 200</div><div class="small muted">Australia</div></div><div class="right"><div class="ticker">8,921.30</div><div class="small negative">−0.18%</div></div></div><div class="row"><span class="muted small">Last scan</span><span class="small">Today, 4:05 pm</span></div></section></div><div class="grid two">${panel('Top holdings',table(stocks.slice(0,4)),'Portfolio')}${panel('Latest scan signals',table(stocks.slice(0,4),true),'All scans')}</div><p class="empty-note">Prototype preview only. All market figures are illustrative, not live prices.</p>`}
+function portfolio(){return `${heading('Portfolio','Track holdings, cost base, exposure and performance.','＋ Add holding')}<div class="grid stats">${stat('Total market value','$248,650','Across 12 positions')}${stat('Total return','+$28,420','+12.90% all time')}${stat('Today’s change','+$1,284','+0.52% today')}${stat('Cash available','$42,500','17.1% of account','')}</div><div class="grid two"><section class="panel"><div class="panel-head"><div class="panel-title">Account performance</div><button class="panel-link">6M ▾</button></div>${chart()}<div class="legend"><span><i class="legend-dot"></i>Portfolio value</span><span class="positive">+12.90% total return</span></div></section><section class="panel"><div class="panel-head"><div class="panel-title">Sector allocation</div></div>${[['Semiconductors',38],['Software & cloud',26],['Internet platforms',18],['Other',18]].map(([n,v])=>`<div class="row"><span>${n}</span><b>${v}%</b></div><div class="bar"><span style="width:${v}%"></span></div>`).join('')}</section></div><section class="panel section-gap"><div class="panel-head"><div class="panel-title">Your holdings</div><button class="btn" data-action="Export CSV">Export CSV</button></div><div class="filters"><input class="input" id="portfolioSearch" placeholder="Search ticker or company" aria-label="Search holdings"><select class="input" aria-label="Sector filter"><option>All sectors</option><option>Semiconductors</option><option>Software</option></select></div><div id="portfolioTable">${table(stocks.concat([['ASML','ASML Holding','$1,042.20','+0.88%','Semiconductors']]))}</div></section><p class="empty-note">Prototype preview only. Holdings and values are sample data.</p>`}
+
+const closedTrades=[
+  {ticker:'NVDA',company:'NVIDIA',side:'Long',entry:'2026-10-02',exit:'2026-10-21',hold:'19 days',qty:25,entryPrice:168.40,exitPrice:182.42,pnl:350.50,returnPct:8.32},
+  {ticker:'MSFT',company:'Microsoft',side:'Long',entry:'2026-09-18',exit:'2026-10-16',hold:'28 days',qty:10,entryPrice:492.00,exitPrice:521.30,pnl:293.00,returnPct:5.96},
+  {ticker:'AVGO',company:'Broadcom',side:'Long',entry:'2026-09-29',exit:'2026-10-14',hold:'15 days',qty:12,entryPrice:389.00,exitPrice:371.22,pnl:-213.36,returnPct:-4.57},
+  {ticker:'TSM',company:'TSMC',side:'Long',entry:'2026-09-04',exit:'2026-10-09',hold:'35 days',qty:15,entryPrice:274.50,exitPrice:298.50,pnl:360.00,returnPct:8.74},
+  {ticker:'GOOGL',company:'Alphabet',side:'Long',entry:'2026-09-22',exit:'2026-10-07',hold:'15 days',qty:20,entryPrice:254.20,exitPrice:248.70,pnl:-110.00,returnPct:-2.16},
+  {ticker:'AMAT',company:'Applied Materials',side:'Long',entry:'2026-08-28',exit:'2026-10-01',hold:'34 days',qty:8,entryPrice:205.00,exitPrice:226.10,pnl:168.80,returnPct:10.29},
+  {ticker:'PANW',company:'Palo Alto Networks',side:'Long',entry:'2026-09-11',exit:'2026-09-26',hold:'15 days',qty:18,entryPrice:214.00,exitPrice:205.82,pnl:-147.24,returnPct:-3.82},
+  {ticker:'ASML',company:'ASML Holding',side:'Long',entry:'2026-08-05',exit:'2026-09-19',hold:'45 days',qty:4,entryPrice:988.00,exitPrice:1042.20,pnl:216.80,returnPct:5.49}
+];
+function money(v){return `${v<0?'−':'+'}$${Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}`}
+function portfolioHistory(){
+ const wins=closedTrades.filter(t=>t.pnl>0).length, losses=closedTrades.filter(t=>t.pnl<0).length;
+ const net=closedTrades.reduce((sum,t)=>sum+t.pnl,0);
+ const grossWins=closedTrades.filter(t=>t.pnl>0).reduce((sum,t)=>sum+t.pnl,0);
+ const grossLosses=Math.abs(closedTrades.filter(t=>t.pnl<0).reduce((sum,t)=>sum+t.pnl,0));
+ const winRate=Math.round(wins/closedTrades.length*100);
+ const avgWin=grossWins/wins, avgLoss=grossLosses/losses;
+ const rows=closedTrades.map(t=>`<tr data-pnl="${t.pnl}" data-ticker="${t.ticker} ${t.company}" data-date="${t.exit}"><td><span class="ticker">${t.ticker}</span><span class="company">${t.company}</span></td><td><span class="pill">${t.side}</span></td><td>${t.entry}</td><td>${t.exit}</td><td class="right">${t.qty}</td><td class="right">$${t.entryPrice.toFixed(2)}</td><td class="right">$${t.exitPrice.toFixed(2)}</td><td class="${t.pnl>=0?'positive':'negative'} right">${money(t.pnl)}</td><td class="${t.returnPct>=0?'positive':'negative'} right">${t.returnPct>=0?'+':''}${t.returnPct.toFixed(2)}%</td><td><span class="pill ${t.pnl<0?'bad':''}">${t.pnl>0?'Win':'Loss'}</span></td></tr>`).join('');
+ return `${heading('Portfolio History','Review closed trades, realised profit and loss, and trading performance.','⇩ Export history')}
+ <div class="grid stats">
+ ${stat('Realised P/L',money(net),`${net>=0?'Net profit':'Net loss'} across ${closedTrades.length} closed trades`,net>=0?'positive':'negative')}
+ ${stat('Closed trades',closedTrades.length,'Completed positions')}
+ ${stat('Win rate',`${winRate}%`,`${wins} wins · ${losses} losses`)}
+ ${stat('Profit factor',(grossWins/grossLosses).toFixed(2),`Avg win ${money(avgWin)} · Avg loss −$${avgLoss.toFixed(2)}`)}
+ </div>
+ <div class="grid two">
+  <section class="panel"><div class="panel-head"><div class="panel-title">Trade outcomes</div><span class="muted small">Closed trades only</span></div>
+   <div class="row"><div><span class="pill">Wins</span><span class="muted small"> &nbsp; Profitable trades</span></div><b class="positive">${wins} <span class="muted small">(${Math.round(wins/closedTrades.length*100)}%)</span></b></div>
+   <div class="bar"><span style="width:${wins/closedTrades.length*100}%;background:var(--green)"></span></div>
+   <div class="row"><div><span class="pill bad">Losses</span><span class="muted small"> &nbsp; Unprofitable trades</span></div><b class="negative">${losses} <span class="muted small">(${Math.round(losses/closedTrades.length*100)}%)</span></b></div>
+   <div class="bar"><span style="width:${losses/closedTrades.length*100}%;background:var(--red)"></span></div>
+   <div class="row"><span class="muted">Average holding period</span><b>26 days</b></div>
+  </section>
+  <section class="panel"><div class="panel-head"><div class="panel-title">Performance summary</div><span class="muted small">Illustrative sample</span></div>
+   <div class="row"><span class="muted">Gross profit</span><b class="positive">${money(grossWins)}</b></div>
+   <div class="row"><span class="muted">Gross loss</span><b class="negative">−$${grossLosses.toFixed(2)}</b></div>
+   <div class="row"><span class="muted">Best trade</span><b class="positive">TSM · +$360.00</b></div>
+   <div class="row"><span class="muted">Worst trade</span><b class="negative">AVGO · −$213.36</b></div>
+  </section>
+ </div>
+ <section class="panel section-gap"><div class="panel-head"><div class="panel-title">Closed trades</div><span class="muted small" id="historyCount">${closedTrades.length} trades</span></div>
+  <div class="filters"><input class="input" id="historySearch" placeholder="Search ticker or company" aria-label="Search closed trades"><select class="input" id="historyOutcome" aria-label="Filter by outcome"><option value="all">All outcomes</option><option value="win">Wins only</option><option value="loss">Losses only</option></select><select class="input" id="historyPeriod" aria-label="Filter by exit date"><option value="all">All dates</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select><button class="btn" data-action="Export history CSV">⇩ Export CSV</button></div>
+  <div class="table-wrap"><table id="historyTable"><thead><tr><th>Stock</th><th>Side</th><th>Entry date</th><th>Exit date</th><th class="right">Qty</th><th class="right">Entry price</th><th class="right">Exit price</th><th class="right">Realised P/L</th><th class="right">Return</th><th>Outcome</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="empty-note" id="historyEmpty" hidden>No closed trades match these filters.</p>
+ </section>
+ <p class="empty-note">Prototype preview only. Closed-trade figures are sample data. In the React app, calculate realised P/L using your trade ledger and define whether fees, dividends and currency conversion are included.</p>`;
+}
+
+
+const scanSets={
+ 'Unusual Volumes':[
+  ['NVDA','NVIDIA','$182.42','+2.84%','Semiconductors',3.4,'9.4','Volume surge'],
+  ['TSM','TSMC','$298.50','+1.72%','Semiconductors',2.8,'9.2','Volume surge'],
+  ['AMAT','Applied Materials','$226.10','+0.76%','Semiconductor equipment',2.5,'8.6','Above average'],
+  ['PLTR','Palantir Technologies','$151.20','+3.18%','Software',2.3,'8.9','Volume surge'],
+  ['AMD','Advanced Micro Devices','$176.84','+2.31%','Semiconductors',2.1,'8.5','Above average'],
+  ['SOFI','SoFi Technologies','$24.63','+4.02%','Financial services',1.9,'8.1','Volume surge']
+ ],
+ 'Trend Starters':[
+  ['MSFT','Microsoft','$524.18','+0.92%','Software',1.4,'9.1','New uptrend'],
+  ['GOOGL','Alphabet','$248.70','+1.35%','Internet',1.6,'8.8','Breakout'],
+  ['AVGO','Broadcom','$371.22','+1.44%','Semiconductors',1.7,'8.7','EMA crossover'],
+  ['COST','Costco','$912.40','+1.12%','Consumer staples',1.3,'8.4','Momentum shift'],
+  ['CRWD','CrowdStrike','$468.15','+2.05%','Cybersecurity',1.8,'8.3','Breakout'],
+  ['UBER','Uber','$96.38','+1.67%','Technology',1.5,'8.0','New uptrend']
+ ],
+ 'Big Gainers':[
+  ['SOFI','SoFi Technologies','$24.63','+4.02%','Financial services',2.2,'9.1','+4.02%'],
+  ['PLTR','Palantir Technologies','$151.20','+3.18%','Software',2.4,'8.9','+3.18%'],
+  ['NVDA','NVIDIA','$182.42','+2.84%','Semiconductors',1.8,'8.8','+2.84%'],
+  ['AMD','Advanced Micro Devices','$176.84','+2.31%','Semiconductors',1.7,'8.5','+2.31%'],
+  ['CRWD','CrowdStrike','$468.15','+2.05%','Cybersecurity',1.6,'8.3','+2.05%'],
+  ['TSM','TSMC','$298.50','+1.72%','Semiconductors',1.5,'8.1','+1.72%']
+ ]
+};
+let selectedScan='Unusual Volumes';
+function scanResultTable(items,type){
+ const extraHead=type==='Unusual Volumes'?'<th>Relative volume</th>':type==='Trend Starters'?'<th>Trend signal</th>':'<th>Day gain</th>';
+ const rows=items.map(s=>`<tr><td><span class="ticker">${s[0]}</span><span class="company">${s[1]}</span></td><td>${s[2]}</td><td class="${isUp(s)?'positive':'negative'}">${s[3]}</td><td class="muted">${s[4]}</td><td>${s[5].toFixed(1)}×</td><td class="positive">${s[6]}/10</td><td><span class="pill ${type==='Trend Starters'?'warn':''}">${s[7]}</span></td></tr>`).join('');
+ return `<div class="table-wrap"><table><thead><tr><th>Stock</th><th>Price</th><th>Day change</th><th>Sector</th>${extraHead}<th>Scan score</th><th>Signal</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function scans(){
+ const items=scanSets[selectedScan]||scanSets['Unusual Volumes'];
+ const descriptions={
+  'Unusual Volumes':'Find stocks trading at significantly higher-than-usual volume, which may signal fresh interest or a potential catalyst.',
+  'Trend Starters':'Spot stocks showing early signs of a new trend, such as breakouts, moving-average crossovers and improving momentum.',
+  'Big Gainers':'Find stocks with the strongest percentage price gains in the current trading session.'
+ };
+ return `${heading('Stock Scans','Choose a scan type to explore stocks matching that strategy.','＋ New scan rule')}
+ <div class="grid stats">
+  ${stat('Available scan types','03','Select a scan below','')}
+  ${stat('Results in this scan',String(items.length),'Illustrative matching stocks','')}
+  ${stat('Strong scan scores',String(items.filter(s=>Number(s[6])>=8.5).length),'Score ≥ 8.5/10','')}
+  ${stat('Last scan','4:05 pm','Demo run · illustrative data','')}
+ </div>
+ <section class="panel">
+  <div class="panel-head"><div><div class="panel-title">Select scan type</div><div class="small muted" style="margin-top:5px">Switch between scan strategies to see their matching results.</div></div><span class="pill">3 scan types</span></div>
+  <div class="scan-type-grid">
+   ${[
+    ['Unusual Volumes','◉','Volume activity','Stocks with unusual trading volume.'],
+    ['Trend Starters','↗','Early trend signals','Stocks beginning a potential new trend.'],
+    ['Big Gainers','▲','Strong daily movers','Stocks with the biggest daily gains.']
+   ].map(([name,icon,kicker,desc])=>`<button class="scan-type ${selectedScan===name?'selected':''}" data-scan-type="${name}" aria-pressed="${selectedScan===name}"><span class="scan-type-icon">${icon}</span><span class="scan-type-kicker">${kicker}</span><span class="scan-type-name">${name}</span><span class="scan-type-desc">${desc}</span><span class="scan-type-bottom">${scanSets[name].length} sample results <span>→</span></span></button>`).join('')}
+  </div>
+ </section>
+ <section class="panel section-gap">
+  <div class="panel-head"><div><div class="panel-title">${selectedScan}</div><div class="small muted" style="margin-top:5px">${descriptions[selectedScan]}</div></div><button class="btn" data-action="Download ${selectedScan} results">⇩ Export CSV</button></div>
+  <div class="filters"><input class="input" id="scanSearch" placeholder="Search ticker or company" aria-label="Search scan results"><select class="input" id="scanScore"><option value="all">All scan scores</option><option value="9">Score 9.0+</option><option value="8.5">Score 8.5+</option></select><select class="input" id="scanSector"><option value="all">All sectors</option><option value="Semiconductors">Semiconductors</option><option value="Software">Software</option><option value="Cybersecurity">Cybersecurity</option><option value="Financial services">Financial services</option></select></div>
+  <div id="scanTable">${scanResultTable(items,selectedScan)}</div>
+  <p class="empty-note" id="scanEmpty" hidden>No stocks match these filters.</p>
+ </section>
+ <p class="empty-note">Prototype preview only. Scan results, scores and market figures are illustrative and not live market data.</p>`;
+}
+
+function watchlist(){const list=stocks.filter((_,i)=>i!==5&&i!==6).concat([['ASML','ASML Holding','$1,042.20','+0.88%','Semiconductors']]);return `${heading('Watchlist','Keep an eye on priority stocks and your potential entry points.','＋ Add ticker')}<div class="filters"><input class="input" id="watchSearch" placeholder="Search watchlist" aria-label="Search watchlist"><select class="input"><option>My watchlist</option><option>AI &amp; semiconductors</option><option>Long-term GARP</option></select><button class="btn" data-action="＋ New list">＋ New list</button></div><div class="watch-grid" id="watchCards">${list.map((s,i)=>`<article class="watch-card" data-search="${s[0]} ${s[1]}"><div class="watch-top"><div class="asset"><div class="coin">${s[0].slice(0,2)}</div><div><div class="ticker">${s[0]}</div><div class="small muted">${s[1]}</div></div></div><button class="btn remove-watch" aria-label="Remove ${s[0]} from watchlist" style="padding:5px 9px">☆</button></div><div class="watch-price">${s[2]}</div><div class="small ${isUp(s)?'positive':'negative'}">${s[3]} <span class="muted">today</span></div><div class="spark"><svg viewBox="0 0 200 36" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,29 20,25 40,28 60,13 80,19 100,10 120,17 140,8 160,12 180,3 200,6" fill="none" stroke="${isUp(s)?'var(--green)':'var(--red)'}" stroke-width="2.2"/></svg></div><div class="row"><span class="small muted">Sector</span><span class="small">${s[4]}</span></div></article>`).join('')}</div><p class="empty-note">Tip: in the finished app, add notes for target prices, investment thesis and review triggers. Demo prices are illustrative.</p>`}
+function render(){const pages={Dashboard:dashboard,Portfolio:portfolio,PortfolioHistory:portfolioHistory,Scans:scans,Watchlist:watchlist};document.getElementById('content').innerHTML=pages[currentPage]();document.querySelectorAll('[data-page]').forEach(b=>{const active=b.dataset.page===currentPage;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});window.scrollTo({top:0,behavior:'smooth'});}
+document.addEventListener('click',e=>{const scanType=e.target.closest('[data-scan-type]');if(scanType){selectedScan=scanType.dataset.scanType;render();return}const nav=e.target.closest('[data-page]');if(nav){currentPage=nav.dataset.page;render();return}const go=e.target.closest('[data-go]');if(go){currentPage=go.dataset.go;render();return}const action=e.target.closest('[data-action]');if(action){const a=action.dataset.action;if(a.includes('Refresh')){action.textContent='✓ Refreshed';setTimeout(()=>{if(action.isConnected)action.textContent='↻ Refresh overview'},1200)}else alert(`${a}\n\nThis is a visual prototype. This action will be connected when the React application is implemented.`);return}const remove=e.target.closest('.remove-watch');if(remove){remove.closest('.watch-card').remove();}});
+
+
+function filterScans(){
+ const q=(document.getElementById('scanSearch')?.value||'').toLowerCase();
+ const score=document.getElementById('scanScore')?.value||'all';
+ const sector=document.getElementById('scanSector')?.value||'all';
+ let shown=0;
+ document.querySelectorAll('#scanTable tbody tr').forEach((tr,i)=>{
+  const ticker=tr.innerText.toLowerCase();
+  const cells=tr.querySelectorAll('td');
+  const rowScore=Number(cells[5]?.innerText.split('/')[0]||0);
+  const rowSector=cells[3]?.innerText||'';
+  const ok=ticker.includes(q)&&(score==='all'||rowScore>=Number(score))&&(sector==='all'||rowSector===sector);
+  tr.hidden=!ok;if(ok)shown++;
+ });
+ const empty=document.getElementById('scanEmpty');if(empty)empty.hidden=shown!==0;
+}
+document.addEventListener('change',e=>{if(['scanScore','scanSector'].includes(e.target.id))filterScans()});
+
+function filterHistory(){
+ const q=(document.getElementById('historySearch')?.value||'').toLowerCase();
+ const outcome=document.getElementById('historyOutcome')?.value||'all';
+ const period=document.getElementById('historyPeriod')?.value||'all';
+ const cutoff=period==='all'?null:new Date('2026-10-25T23:59:59');
+ if(cutoff&&period!=='all')cutoff.setDate(cutoff.getDate()-Number(period));
+ let shown=0;
+ document.querySelectorAll('#historyTable tbody tr').forEach(tr=>{
+  const pnl=Number(tr.dataset.pnl), date=new Date(tr.dataset.date+'T00:00:00');
+  const matchText=tr.dataset.ticker.toLowerCase().includes(q);
+  const matchOutcome=outcome==='all'||(outcome==='win'&&pnl>0)||(outcome==='loss'&&pnl<0);
+  const matchPeriod=!cutoff||date>=cutoff;
+  tr.hidden=!(matchText&&matchOutcome&&matchPeriod);if(!tr.hidden)shown++;
+ });
+ const count=document.getElementById('historyCount');if(count)count.textContent=`${shown} trade${shown===1?'':'s'}`;
+ const empty=document.getElementById('historyEmpty');if(empty)empty.hidden=shown!==0;
+}
+document.addEventListener('change',e=>{if(['historyOutcome','historyPeriod'].includes(e.target.id))filterHistory()});
+
+document.addEventListener('input',e=>{if(['historySearch'].includes(e.target.id)){filterHistory()}if(e.target.id==='portfolioSearch'){const q=e.target.value.toLowerCase();document.querySelectorAll('#portfolioTable tbody tr').forEach(tr=>tr.hidden=!tr.innerText.toLowerCase().includes(q))}if(e.target.id==='scanSearch'){filterScans()}if(e.target.id==='watchSearch'){const q=e.target.value.toLowerCase();document.querySelectorAll('#watchCards .watch-card').forEach(card=>card.hidden=!card.dataset.search.toLowerCase().includes(q))}});
+render();
+</script>
+</body></html>

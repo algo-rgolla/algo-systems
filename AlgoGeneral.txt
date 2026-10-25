@@ -10,3 +10,32 @@ TODO:
 
 - Remove unused code in react solution
 - Remove all warnings in react solution
+
+
+Clude:
+- Use React Hook Form
+- Zod for validation
+- Tanstack React Query 
+- Use Axis to call the backend API's
+- 
+
+
+- Use Prisma for ORM
+- TradingView Lightweight Charts or Apache ECharts
+
+- Write Unit tests for components
+- Write end to end tests
+- write e2e tests (end to end tests)
+
+
+- Use DomPurify before rendering the content. It avoid cross site scripting attacks
+
+AI Models
+GPT 5.5, GPT Mini, GPT Nano
+
+Claude
+Opus 4.6, Sonnet 4.6, Haiku 4.5
+
+AI SDK by Versal
+
+To get API key goto: platform.openai.com/chat

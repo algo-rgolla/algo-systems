@@ -1,5 +1,11 @@
-Absolutely. Here is the complete document, structured so you can paste it directly into Word, Google Docs, or Markdown and save it as a PDF.
+Prompt: 
 
+I am building a algo trader web application which displays stock scans, portfolio, watchlist and market data.
+I am finalising the UI Design so that i can implement my website using the React.
+
+Can you update the design by Adding portfolio history where it shows list of closed trades and profit loss, number of wins and number of losses.. etc 
+
+---------
 Stock Screener Frontend Development Plan
 1. Project Overview
 Build a production-quality stock screener and portfolio web application using:
