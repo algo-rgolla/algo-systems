@@ -1,49 +1,21 @@
-import { queryOptions, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { httpClient } from '@/api/client/httpClient'
-import type { ProductsDto, ScanCounterListDto } from '@/api/types/dtos'
-import { toStockRows } from '@/features/stocks/model'
-import { scanLabel } from '@/features/stocks/scans'
+import { summariseScanRuns } from './model'
+import type { ScanRun } from './types'
 
-export interface ScanCounter {
-  scanType: string
-  label: string
-  count: number
+/**
+ * Proposed endpoints (served by the demo data until the API has them):
+ * - GET /api/scans/runs: the latest run of every scan on every market
+ */
+export const scanKeys = {
+  all: ['scans'] as const,
+  runs: () => [...scanKeys.all, 'runs'] as const,
 }
 
-export const screenerKeys = {
-  all: ['screener'] as const,
-  counters: () => [...screenerKeys.all, 'counters'] as const,
-  results: (scanType: string) => [...screenerKeys.all, 'results', scanType] as const,
-}
-
-export const scanCountersQuery = () =>
-  queryOptions({
-    queryKey: screenerKeys.counters(),
-    queryFn: ({ signal }) =>
-      httpClient.get<ScanCounterListDto>('/api/longscan/scan-counters', { signal }),
-    select: (dto): ScanCounter[] =>
-      dto.scanCounters
-        .filter((c) => c.scanType)
-        .map((c) => ({
-          scanType: c.scanType!,
-          label: c.scanTypeText || scanLabel(c.scanType!),
-          count: c.scanResultCount,
-        })),
-  })
-
-export function useScanCounters() {
-  return useQuery(scanCountersQuery())
-}
-
-export function useScanResults(scanType: string | null) {
+export function useScanSummaries() {
   return useQuery({
-    queryKey: screenerKeys.results(scanType ?? ''),
-    queryFn: ({ signal }) =>
-      httpClient.get<ProductsDto>('/api/longscan/get-scan-result', {
-        query: { scanName: scanType },
-        signal,
-      }),
-    select: toStockRows,
-    enabled: Boolean(scanType),
+    queryKey: scanKeys.runs(),
+    queryFn: ({ signal }) => httpClient.get<ScanRun[]>('/api/scans/runs', { signal }),
+    select: summariseScanRuns,
   })
 }

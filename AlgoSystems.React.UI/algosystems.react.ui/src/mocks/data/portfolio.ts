@@ -15,6 +15,7 @@ const holding = (
   quantity,
   averageCost,
   openedAt,
+  note: null,
 })
 
 /**

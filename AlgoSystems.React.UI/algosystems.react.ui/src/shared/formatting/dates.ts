@@ -27,3 +27,20 @@ export function toIsoDate(date: Date): IsoDate {
 export function daysBetween(from: IsoDate, to: IsoDate): number {
   return Math.round((isoDateToUtc(to).getTime() - isoDateToUtc(from).getTime()) / DAY_MS)
 }
+
+/** Today's calendar date in the viewer's timezone. */
+export function todayIsoDate(now: Date = new Date()): IsoDate {
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}` as IsoDate
+}
+
+/** The same day `months` earlier (clamped to the month's last day, e.g. 31 Mar → 28 Feb). */
+export function subtractMonths(date: IsoDate, months: number): IsoDate {
+  const d = isoDateToUtc(date)
+  const day = d.getUTCDate()
+  d.setUTCDate(1)
+  d.setUTCMonth(d.getUTCMonth() - months)
+  const lastDay = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate()
+  d.setUTCDate(Math.min(day, lastDay))
+  return toIsoDate(d)
+}

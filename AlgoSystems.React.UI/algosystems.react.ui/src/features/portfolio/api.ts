@@ -1,53 +1,48 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { httpClient } from '@/api/client/httpClient'
-import type { AlgoProductRequestDto, ProductsDto } from '@/api/types/dtos'
-import { toStockRows } from '@/features/stocks/model'
+import { toPortfolioView } from './calculations'
+import type {
+  AddHoldingRequest,
+  Portfolio,
+  PortfolioHolding,
+  PortfolioPerformance,
+} from './types'
 
-/** Manually recorded trades (the AlgoPortfolios table), separate from strategy portfolios. */
-export const tradeKeys = {
-  all: ['trades'] as const,
-  open: () => [...tradeKeys.all, 'open'] as const,
-  closed: () => [...tradeKeys.all, 'closed'] as const,
+/**
+ * Proposed endpoints (served by the demo data until the API has them):
+ * - GET /api/portfolio: the manual portfolio with its holdings and latest quotes
+ * - GET /api/portfolio/performance: daily market value of the holdings
+ * - POST /api/portfolio/holdings: add a holding (409 if the stock is already held)
+ */
+export const portfolioKeys = {
+  all: ['portfolio'] as const,
+  detail: () => [...portfolioKeys.all, 'detail'] as const,
+  performance: () => [...portfolioKeys.all, 'performance'] as const,
 }
 
-export function useOpenTrades() {
+export function usePortfolio() {
   return useQuery({
-    queryKey: tradeKeys.open(),
-    queryFn: ({ signal }) =>
-      httpClient.get<ProductsDto>('/api/AlgoPortfolio/algo-portfolio-list', { signal }),
-    select: toStockRows,
+    queryKey: portfolioKeys.detail(),
+    queryFn: ({ signal }) => httpClient.get<Portfolio>('/api/portfolio', { signal }),
+    select: toPortfolioView,
   })
 }
 
-export function useClosedTrades() {
+export function usePortfolioPerformance() {
   return useQuery({
-    queryKey: tradeKeys.closed(),
+    queryKey: portfolioKeys.performance(),
     queryFn: ({ signal }) =>
-      httpClient.get<ProductsDto>('/api/AlgoPortfolio/algo-portfolio-history', {
-        // Required by the endpoint's model binding but not used for filtering.
-        query: { scanName: 'Algo_Portfolio' },
-        signal,
-      }),
-    select: toStockRows,
+      httpClient.get<PortfolioPerformance>('/api/portfolio/performance', { signal }),
   })
 }
 
-export function useSaveTrade() {
+export function useAddHoldingMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (trade: AlgoProductRequestDto) =>
-      httpClient.post<string>('/api/AlgoPortfolio/add-edit-algo-portfolio', trade),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: tradeKeys.all }),
-  })
-}
-
-export function useDeleteTrade() {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: (algoPortfolioId: number) =>
-      httpClient.delete<string>(`/api/AlgoPortfolio/delete-algo-portfolio/${algoPortfolioId}`),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: tradeKeys.all }),
+    mutationFn: (request: AddHoldingRequest) =>
+      httpClient.post<PortfolioHolding>('/api/portfolio/holdings', request),
+    // Returned, so `mutateAsync` resolves only once the summary and table have refetched.
+    onSettled: () => queryClient.invalidateQueries({ queryKey: portfolioKeys.all }),
   })
 }

@@ -22,7 +22,8 @@ export const DEMO_AS_OF: IsoDate = '2026-10-23'
 /** Fixed demo conversion into the portfolio's base currency (AUD). */
 export const DEMO_FX_RATES: FxRates = { AUD: 1, USD: 1.53 }
 
-export const PRICE_HISTORY_SESSIONS = 90
+/** About a year of sessions: enough for EMA 63 and the portfolio's 1Y performance range. */
+export const PRICE_HISTORY_SESSIONS = 260
 
 /**
  * Price path, which decides how the EMAs line up on the last session:
@@ -170,11 +171,11 @@ const DRIFT: Record<Trend, { sessions: number; drift: number }[]> = {
   up: [
     { sessions: 5, drift: 0.016 },
     { sessions: 7, drift: -0.009 },
-    { sessions: Infinity, drift: 0.003 },
+    { sessions: Infinity, drift: 0.0012 },
   ],
   down: [
     { sessions: 14, drift: -0.005 },
-    { sessions: Infinity, drift: 0.001 },
+    { sessions: Infinity, drift: 0.0004 },
   ],
   range: [{ sessions: Infinity, drift: 0 }],
 }

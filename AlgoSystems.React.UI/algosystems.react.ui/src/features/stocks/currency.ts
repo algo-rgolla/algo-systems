@@ -7,3 +7,13 @@ export type FxRates = Record<CurrencyCode, number>
 export function toBaseCurrency(amount: number, currency: CurrencyCode, rates: FxRates): number {
   return amount * rates[currency]
 }
+
+/** Converts an amount between any two currencies of `rates`, via the base currency. */
+export function convertCurrency(
+  amount: number,
+  from: CurrencyCode,
+  to: CurrencyCode,
+  rates: FxRates,
+): number {
+  return (amount * rates[from]) / rates[to]
+}

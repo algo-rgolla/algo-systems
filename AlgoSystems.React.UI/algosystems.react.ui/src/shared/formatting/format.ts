@@ -98,6 +98,17 @@ export function formatPercent(
   return `${signOf(rounded, signed)}${Math.abs(rounded).toFixed(decimals)}%`
 }
 
+/** A signed change in points or price, e.g. "+12.35" or "−8.10". */
+export function formatChange(value: number | null, decimals = 2): string {
+  if (value == null) return DASH
+  const rounded = round(value, decimals)
+  const formatted = Math.abs(rounded).toLocaleString(LOCALE, {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  })
+  return `${signOf(rounded, true)}${formatted}`
+}
+
 /** Share count; fractional quantities keep up to 4 decimals. */
 export function formatQuantity(value: number | null): string {
   return value == null ? DASH : quantityFormatter.format(value)

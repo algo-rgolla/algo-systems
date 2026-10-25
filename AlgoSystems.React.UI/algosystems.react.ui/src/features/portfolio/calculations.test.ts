@@ -40,6 +40,7 @@ const holding = (
   quantity,
   averageCost,
   openedAt: '2026-01-02',
+  note: null,
 })
 
 const portfolio = (holdings: PortfolioHolding[], cash = 0): Portfolio => ({

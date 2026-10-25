@@ -13,6 +13,7 @@ import { SCAN_TYPES } from '@/features/stock-scans/types'
 import { ema } from '@/features/stocks/indicators'
 import { isIsoDate, isoDateToUtc, type IsoDate } from '@/shared/formatting/dates'
 import { formatCurrency, formatPercent, formatPrice } from '@/shared/formatting/format'
+import { demoMarketOverview } from './marketData'
 import { demoEmptyPortfolio, demoPortfolio } from './portfolio'
 import { demoClosedTrades } from './portfolioHistory'
 import { demoScanResults, demoScanRuns, SCAN_RULES } from './scans'
@@ -330,5 +331,26 @@ describe('portfolio history', () => {
     )
     expect(s.bestTrade?.realisedPnl).toBeCloseTo(Math.max(...pnl), 10)
     expect(s.worstTrade?.realisedPnl).toBeCloseTo(Math.min(...pnl), 10)
+  })
+})
+
+describe('market overview fallback', () => {
+  it('is labelled simulated and matches the widget symbols', () => {
+    expect(demoMarketOverview.simulated).toBe(true)
+    expect(demoMarketOverview.asOf).toBe(DEMO_AS_OF)
+    expect(demoMarketOverview.quotes.map((q) => q.name)).toEqual([
+      'S&P 500',
+      'US Tech 100',
+      'ASX 200',
+      'Dow Jones',
+      'Gold',
+      'WTI Crude Oil',
+    ])
+    for (const q of demoMarketOverview.quotes) {
+      expect(q.change).toBeCloseTo(cents(q.value - q.previousClose), 10)
+      expect(q.changePercent).toBeCloseTo((q.change / q.previousClose) * 100, 10)
+      expect(q.high).toBeGreaterThanOrEqual(Math.max(q.open, q.value))
+      expect(q.low).toBeLessThanOrEqual(Math.min(q.open, q.value))
+    }
   })
 })

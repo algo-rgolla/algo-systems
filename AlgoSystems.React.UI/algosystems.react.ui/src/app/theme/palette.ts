@@ -31,6 +31,16 @@ declare module '@mui/material/styles' {
     }
     /** Rules inside panels, lighter than `divider` (which outlines panels). */
     line: { strong: string; subtle: string; row: string }
+    /** Selectable tiles inside panels (scan types, watchlist cards). */
+    tile: {
+      bg: string
+      border: string
+      hoverBorder: string
+      iconBg: string
+      /** A gradient, for the `background` property. */
+      selectedBg: string
+      selectedRing: string
+    }
     nav: { text: string; footer: string; hover: string; active: string }
     /** Status pills (scan signals, win/loss outcomes). */
     signal: { positive: SignalColor; warn: SignalColor; negative: SignalColor }
@@ -39,6 +49,7 @@ declare module '@mui/material/styles' {
     market?: Palette['market']
     surface?: Palette['surface']
     line?: Palette['line']
+    tile?: Palette['tile']
     nav?: Palette['nav']
     signal?: Palette['signal']
   }
@@ -106,6 +117,14 @@ export const palette: PaletteOptions = {
     hover: tokens.rowHover,
   },
   line: { strong: tokens.inputBorder, subtle: tokens.lineSubtle, row: tokens.lineRow },
+  tile: {
+    bg: '#121d30',
+    border: '#293851',
+    hoverBorder: '#596ba5',
+    iconBg: '#263451',
+    selectedBg: 'linear-gradient(145deg, #29365a, #151f33)',
+    selectedRing: '#91a0ff35',
+  },
   // Tables sit inside panels and show the panel gradient through.
   DataGrid: { bg: 'transparent', headerBg: 'transparent', pinnedBg: tokens.surface },
   nav: {

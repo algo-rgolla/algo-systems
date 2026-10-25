@@ -1,7 +1,13 @@
 import { sideSign, sum } from '@/features/stocks/calculations'
-import { toBaseCurrency } from '@/features/stocks/currency'
+import { convertCurrency, toBaseCurrency, type FxRates } from '@/features/stocks/currency'
+import type { PriceBar, StockKey } from '@/features/stocks/types'
+import { subtractMonths, type IsoDate } from '@/shared/formatting/dates'
+import type { CurrencyCode } from '@/shared/formatting/format'
 import type {
+  AddHoldingRequest,
   HoldingValuation,
+  PerformancePoint,
+  PerformanceRange,
   Portfolio,
   PortfolioHolding,
   PortfolioSummary,
@@ -35,6 +41,7 @@ export function valueHolding(holding: PortfolioHolding, portfolio: Portfolio): H
     unrealisedPnlPercent: costBasis === 0 ? 0 : (unrealisedPnl / costBasis) * 100,
     dayChange: holding.quantity * holding.quote.change * sign,
     marketValueBase: valueBase,
+    unrealisedPnlBase: toBaseCurrency(unrealisedPnl, holding.stock.currency, portfolio.fxRates),
     weightPercent: total === 0 ? 0 : (valueBase / total) * 100,
   }
 }
@@ -98,4 +105,87 @@ export function sectorAllocation(portfolio: Portfolio, maxSlices = 5): SectorAll
       : slices
 
   return grouped.map((s) => ({ ...s, percent: total === 0 ? 0 : (s.marketValue / total) * 100 }))
+}
+
+/** quantity × price + fees, in the purchase currency. */
+export function purchaseCost(quantity: number, price: number, fees: number): number {
+  return quantity * price + fees
+}
+
+/** Average cost per share in the stock's currency, with fees spread across the shares. */
+export function averageCostFor(
+  purchase: Pick<AddHoldingRequest, 'quantity' | 'price' | 'fees' | 'currency'>,
+  stockCurrency: CurrencyCode,
+  rates: FxRates,
+): number {
+  const cost = purchaseCost(purchase.quantity, purchase.price, purchase.fees)
+  return convertCurrency(cost, purchase.currency, stockCurrency, rates) / purchase.quantity
+}
+
+/**
+ * The portfolio's market value at each session's close, counting each holding from the day it
+ * was opened. Values are in the base currency.
+ */
+export function portfolioValueSeries(
+  holdings: PortfolioHolding[],
+  barsFor: (key: StockKey) => PriceBar[],
+  rates: FxRates,
+): PerformancePoint[] {
+  const byDate = new Map<IsoDate, number>()
+  for (const holding of holdings) {
+    const bars = barsFor(holding.stock.key)
+    // A holding bought after the last session is already in the latest value, so count it there.
+    const lastDate = bars.at(-1)?.date
+    const from = lastDate && holding.openedAt > lastDate ? lastDate : holding.openedAt
+    for (const bar of bars) {
+      const held = bar.date >= from
+      const value = held
+        ? toBaseCurrency(holding.quantity * bar.close, holding.stock.currency, rates)
+        : 0
+      byDate.set(bar.date, (byDate.get(bar.date) ?? 0) + value)
+    }
+  }
+  return [...byDate.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([date, value]) => ({ date, value }))
+}
+
+const RANGE_MONTHS: Record<PerformanceRange, number> = { '1M': 1, '3M': 3, '6M': 6, '1Y': 12 }
+
+/** The points within `range` of the last point, oldest first. */
+export function pointsInRange(
+  points: PerformancePoint[],
+  range: PerformanceRange,
+): PerformancePoint[] {
+  const last = points.at(-1)
+  if (!last) return []
+  const start = subtractMonths(last.date, RANGE_MONTHS[range])
+  return points.filter((p) => p.date >= start)
+}
+
+export interface HoldingRow extends PortfolioHolding, HoldingValuation {
+  /** Stable grid row id. */
+  rowKey: string
+}
+
+/** Everything the Portfolio page shows, derived from the portfolio record. */
+export interface PortfolioView {
+  portfolio: Portfolio
+  summary: PortfolioSummary
+  rows: HoldingRow[]
+  allocation: SectorAllocation[]
+}
+
+export function toPortfolioView(portfolio: Portfolio): PortfolioView {
+  return {
+    portfolio,
+    summary: summarisePortfolio(portfolio),
+    rows: portfolio.holdings.map((holding) => ({
+      ...holding,
+      ...valueHolding(holding, portfolio),
+      rowKey: holding.id,
+    })),
+    // Three largest sectors and "Other", as in the design.
+    allocation: sectorAllocation(portfolio, 4),
+  }
 }

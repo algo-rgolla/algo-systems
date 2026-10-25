@@ -8,9 +8,10 @@ export interface PortfolioHolding extends QuotedStock {
   id: string
   side: PositionSide
   quantity: number
-  /** Average price paid per share. */
+  /** Average price paid per share in the stock's currency, including fees. */
   averageCost: number
   openedAt: IsoDate
+  note: string | null
 }
 
 export interface Portfolio {
@@ -35,6 +36,7 @@ export interface HoldingValuation {
   /** Today's change in value: quantity × the quote's change. */
   dayChange: number
   marketValueBase: number
+  unrealisedPnlBase: number
   /** Share of total invested market value, in percent. */
   weightPercent: number
 }
@@ -64,11 +66,32 @@ export interface SectorAllocation {
   percent: number
 }
 
-/** What the Add holding form submits. */
-export interface NewHolding {
+/**
+ * What the Add holding form submits. Price and fees are in `currency`; the server converts them
+ * into the stock's currency for the holding's average cost.
+ */
+export interface AddHoldingRequest {
   key: QuotedStock['stock']['key']
-  side: PositionSide
   quantity: number
-  averageCost: number
-  openedAt: IsoDate
+  price: number
+  fees: number
+  currency: CurrencyCode
+  purchaseDate: IsoDate
+  note: string | null
 }
+
+export interface PerformancePoint {
+  date: IsoDate
+  /** Market value of the holdings open on that date, in the base currency. */
+  value: number
+}
+
+export interface PortfolioPerformance {
+  baseCurrency: CurrencyCode
+  /** One point per trading session, oldest first. */
+  points: PerformancePoint[]
+}
+
+export const PERFORMANCE_RANGES = ['1M', '3M', '6M', '1Y'] as const
+
+export type PerformanceRange = (typeof PERFORMANCE_RANGES)[number]
