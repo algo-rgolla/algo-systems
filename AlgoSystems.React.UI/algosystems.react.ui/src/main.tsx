@@ -5,7 +5,8 @@ import { App } from '@/app/App'
 
 /**
  * With VITE_USE_DEMO_DATA=true, a mock service worker answers API requests from src/mocks.
- * The flag is replaced at build time, so the mocks are left out of normal builds.
+ * The flag is read inline (not via shared/config's DEMO_MODE) so the build replaces it with a
+ * constant and drops the mocks, and their demo data, from normal builds.
  */
 async function startDemoData() {
   if (import.meta.env.VITE_USE_DEMO_DATA !== 'true') return

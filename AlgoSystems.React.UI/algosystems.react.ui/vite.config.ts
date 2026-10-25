@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
@@ -17,6 +18,11 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+    },
+    test: {
+      // Pure logic tests (formatting, calculations, demo data); no DOM needed yet.
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
     },
     server: {
       // 5173 is the origin allowed by the API's CORS policy (AllowedOrigins).

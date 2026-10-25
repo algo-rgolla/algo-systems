@@ -15,13 +15,14 @@ npm install
 npm run dev
 ```
 
-| Script             | Purpose                                       |
-| ------------------ | --------------------------------------------- |
-| `npm run dev`      | Dev server with HMR                           |
-| `npm run build`    | Type-check and production build to `dist/`    |
-| `npm run check`    | Type-check + ESLint + Prettier check (no fix) |
-| `npm run lint:fix` | ESLint with autofix                           |
-| `npm run format`   | Prettier write                                |
+| Script             | Purpose                                      |
+| ------------------ | -------------------------------------------- |
+| `npm run dev`      | Dev server with HMR                          |
+| `npm run build`    | Type-check and production build to `dist/`   |
+| `npm run check`    | Type-check + ESLint + Prettier check + tests |
+| `npm run test`     | Vitest (formatting, calculations, demo data) |
+| `npm run lint:fix` | ESLint with autofix                          |
+| `npm run format`   | Prettier write                               |
 
 Configuration lives in `.env.local` (see `.env.example`). In development leave
 `VITE_API_BASE_URL` empty so calls go through the Vite proxy; set it to the API origin for
@@ -47,7 +48,7 @@ src/
     portfolio-history/  Closed trades and their results
     stock-scans/        Unusual Volume, Big Gainers and EMA Crossover results
     watchlist/          Watched stocks with price charts
-  mocks/        Demo data: MSW handlers for the API endpoints and their typed fixtures.
+  mocks/        Demo mode: deterministic demo data (data/) and MSW handlers (handlers/).
   shared/       Business-agnostic UI, hooks and formatting. Must not import from features/.
 ```
 
@@ -76,5 +77,4 @@ src/
   a light scheme won't require changing components.
 - **Generated API types.** The DTOs in `api/types/dtos.ts` are written by hand. If the API grows,
   generate them from the Swagger document (`openapi-typescript`) instead.
-- **Tests.** Vitest + Testing Library. Start with `shared/formatting` and `features/stocks`, which
-  hold the pure logic.
+- **Component tests.** Vitest covers the pure logic; add Testing Library for component tests.

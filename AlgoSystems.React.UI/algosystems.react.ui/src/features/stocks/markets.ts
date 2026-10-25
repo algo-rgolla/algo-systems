@@ -7,6 +7,8 @@ export interface MarketDefinition {
   code: Market
   label: string
   currency: CurrencyCode
+  /** IANA zone of the exchange; scan run times are shown in it. */
+  timeZone: string
   /** Upper-case ticker without the exchange suffix. */
   symbolPattern: RegExp
   symbolHint: string
@@ -17,6 +19,7 @@ export const MARKETS: Record<Market, MarketDefinition> = {
     code: 'AU',
     label: 'ASX',
     currency: 'AUD',
+    timeZone: 'Australia/Sydney',
     symbolPattern: /^[A-Z0-9]{3,6}$/,
     symbolHint: '3–6 letters or digits, e.g. BHP',
   },
@@ -24,6 +27,7 @@ export const MARKETS: Record<Market, MarketDefinition> = {
     code: 'US',
     label: 'US',
     currency: 'USD',
+    timeZone: 'America/New_York',
     symbolPattern: /^[A-Z]{1,5}(\.[A-Z])?$/,
     symbolHint: '1–5 letters, e.g. NVDA or BRK.B',
   },

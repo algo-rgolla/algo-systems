@@ -24,7 +24,8 @@ React UI (`AlgoSystems.React.UI/algosystems.react.ui`). Run the API first with `
 ```bash
 npm run dev       # Vite dev server on http://localhost:5173 (strictPort; it's the origin CORS allows)
 npm run build     # tsc -b && vite build
-npm run check     # typecheck + eslint + prettier --check; run before calling a change done
+npm run check     # typecheck + eslint + prettier --check + vitest; run before calling a change done
+npm run test      # vitest run (formatting, calculations, demo-data consistency)
 npm run lint:fix  # eslint --fix
 npm run format    # prettier --write
 ```
@@ -61,7 +62,7 @@ Active projects (the ones in `AlgoSystems.sln`) and how they depend on each othe
 
 `AlgoSystems.React.UI/algosystems.react.ui` is the current UI, built from the plan in `Ai_prompt_implementation.txt`. Its `README.md` has the same rules in more detail.
 
-**Stack:** React 19, TypeScript 6 (strict, `verbatimModuleSyntax`, so use `import type`), Vite 8, MUI 9 with Emotion, MUI X Data Grid and MUI X Charts 9, TanStack Query 5, React Router 7 (data router, imported from `react-router`), Inter via `@fontsource-variable/inter`, and MSW 3 for demo data. ESLint 10 uses a flat config, and Prettier is set to no semicolons, single quotes, trailing commas and a print width of 100. There are no tests yet. When tests are added, use Vitest and Testing Library, starting with `shared/formatting` and `features/stocks`.
+**Stack:** React 19, TypeScript 6 (strict, `verbatimModuleSyntax`, so use `import type`), Vite 8, MUI 9 with Emotion, MUI X Data Grid and MUI X Charts 9, TanStack Query 5, React Router 7 (data router, imported from `react-router`), Inter via `@fontsource-variable/inter`, and MSW 3 for demo data. ESLint 10 uses a flat config, and Prettier is set to no semicolons, single quotes, trailing commas and a print width of 100. Tests use Vitest (`*.test.ts` next to the code, node environment); add Testing Library when component tests are needed.
 
 **Layout** (`src/`, imported through the `@/` alias):
 
@@ -81,7 +82,9 @@ Active projects (the ones in `AlgoSystems.sln`) and how they depend on each othe
 - **Theme preview:** in dev, `/dev/theme` (`src/dev/ThemePreviewPage.tsx`, not in production builds) renders every shared component. Add new shared components to it.
 - **Accessibility:** focus rings come from the theme (`:focus-visible` and `.Mui-focusVisible`), so don't remove outlines in components. The layout has a skip link to `#main-content`.
 - **Financial colour is semantic.** Show P&L and price changes with `SignedValue` or `theme.palette.market.{up,down,flat}`, never `success` or `error`. Status pills use `StatusPill` tones (`palette.signal`). Negative numbers display with U+2212 (−).
-- **Demo data:** `VITE_USE_DEMO_DATA=true` starts a Mock Service Worker (`src/mocks/`: `handlers/<feature>.ts` answer the real endpoint paths from typed `fixtures/`), so hooks, DTOs and mappers run unchanged. Add a handler for every endpoint a page uses, including proposed endpoints the API doesn't have yet.
+- **Domain types:** each feature has `types.ts` (numbers, ISO date strings, `CurrencyCode`) and pure `calculations.ts`; shared stock, quote, market and FX types live in `features/stocks`, and list paging/sorting/filtering types in `api/types/query.ts`. For endpoints that don't exist yet, these types are the proposed wire contract. Derived figures (P/L, returns, summaries, allocation) are always calculated, never stored.
+- **Demo data:** `VITE_USE_DEMO_DATA=true` starts a Mock Service Worker. `src/mocks/data/<feature>.ts` holds deterministic demo data (real tickers, simulated prices as of 23 Oct 2026, fixed AUD/USD rate), all derived from one stock universe in `mocks/data/stocks.ts`; `mocks/handlers/<feature>.ts` serve it at the endpoint paths. Demo data never goes in components. `mocks/data/demoData.test.ts` recomputes every derived figure, so keep it passing when changing data. The top bar shows a "Demo data" badge whenever `DEMO_MODE` (`shared/config.ts`) is on.
+- **Formatting:** `format.ts` has `formatPrice` (optional currency), `formatCurrency` (`currency`, `signed`, `decimals`), `formatPercent` (`signed`, `decimals`), `formatQuantity`, `formatMultiple`, `formatDate` (Date or ISO date, never shifted by timezone), and `formatTime`/`formatDateTime` (in an exchange's `MARKETS[m].timeZone`). Negative numbers use U+2212.
 - **Config:** use `.env.local` (see `.env.example`). Leave `VITE_API_BASE_URL` empty in dev so requests go through the proxy. `VITE_API_PROXY_TARGET` defaults to `http://localhost:5239`.
 - **Deferred:** auth (Firebase token verification is off in the API), a light theme, and generated API types (use `openapi-typescript` from Swagger if the DTOs grow). Don't build these unless asked.
 - `AlgoSystems.Core.Portal` is the legacy ASP.NET MVC portal (Identity, Hangfire, NLog). It is not in the solution.

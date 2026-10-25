@@ -2,9 +2,11 @@ import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
+import Stack from '@mui/material/Stack'
 import Toolbar from '@mui/material/Toolbar'
 import { useIsFetching } from '@tanstack/react-query'
 import { Link as RouterLink, useNavigation } from 'react-router'
+import { DemoModeBadge } from './DemoModeBadge'
 import { TOP_BAR_HEIGHT } from './dimensions'
 
 function Brand() {
@@ -52,10 +54,13 @@ export function TopBar() {
         }}
       >
         <Brand />
-        {/* Placeholder until authentication is wired up. */}
-        <Avatar role="img" aria-label="User profile">
-          U
-        </Avatar>
+        <Stack direction="row" sx={{ alignItems: 'center', gap: '12px' }}>
+          <DemoModeBadge />
+          {/* Placeholder until authentication is wired up. */}
+          <Avatar role="img" aria-label="User profile">
+            U
+          </Avatar>
+        </Stack>
       </Toolbar>
       {busy && (
         <LinearProgress sx={{ position: 'absolute', bottom: -1, left: 0, right: 0, height: 2 }} />
