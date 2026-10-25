@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import type { GridColDef } from '@mui/x-data-grid'
 import { Fragment } from 'react'
+import { CandlestickChart } from '@/shared/components/CandlestickChart'
 import { DataTable } from '@/shared/components/DataTable'
 import { EmptyState } from '@/shared/components/EmptyState'
 import { ErrorState } from '@/shared/components/ErrorState'
@@ -19,7 +20,7 @@ import { StatCell, StatStrip } from '@/shared/components/StatStrip'
 import { StatusPill } from '@/shared/components/StatusPill'
 import { TwoLineCell } from '@/shared/components/TwoLineCell'
 import { formatCurrency, formatPercent, formatPrice } from '@/shared/formatting/format'
-import { sampleAllocation, sampleStocks, type SampleStock } from './sampleData'
+import { sampleAllocation, sampleCandles, sampleStocks, type SampleStock } from './sampleData'
 
 const columns: GridColDef<SampleStock>[] = [
   {
@@ -130,6 +131,14 @@ export default function ThemePreviewPage() {
             </Box>
           </Panel>
         </SplitLayout>
+
+        <Panel title="Candlestick chart">
+          <CandlestickChart
+            candles={sampleCandles}
+            height={{ xs: 220, md: 280 }}
+            label="Sample daily candlestick chart"
+          />
+        </Panel>
 
         <SplitLayout>
           <Panel title="Empty and loading">

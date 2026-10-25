@@ -1,4 +1,4 @@
-import type { QuotedStock } from '@/features/stocks/types'
+import type { QuotedStock, StockKey } from '@/features/stocks/types'
 import type { IsoDate } from '@/shared/formatting/dates'
 
 export interface WatchlistItem extends QuotedStock {
@@ -11,4 +11,8 @@ export interface Watchlist {
   id: string
   name: string
   items: WatchlistItem[]
+}
+
+export interface AddWatchlistItemRequest {
+  key: StockKey
 }

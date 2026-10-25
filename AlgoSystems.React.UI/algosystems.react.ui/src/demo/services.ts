@@ -16,11 +16,17 @@ import {
   type ScanRun,
   type ScanType,
 } from '@/features/stock-scans/types'
-import type { Stock } from '@/features/stocks/types'
+import type { PriceHistory, Stock, StockKey } from '@/features/stocks/types'
+import type { Watchlist, WatchlistItem } from '@/features/watchlist/types'
 import { demoMarketOverview } from './data/marketData'
 import { addDemoHolding, demoPortfolioPerformance, demoPortfolioState } from './data/portfolioStore'
 import { demoScanResults, demoScanRuns } from './data/scans'
-import { demoStocks } from './data/stocks'
+import { demoPriceHistory, demoStocks } from './data/stocks'
+import {
+  addDemoWatchlistItem,
+  demoWatchlistState,
+  removeDemoWatchlistItem,
+} from './data/watchlistStore'
 import { demoRequest } from './request'
 
 type Options = { signal?: AbortSignal }
@@ -46,6 +52,10 @@ export const demoServices = {
   stockDirectory: ({ signal }: Options = {}): Promise<Stock[]> =>
     demoRequest('stocks', () => demoStocks, { signal }),
 
+  /** Daily bars, oldest first, ending at the stock's current quote. */
+  priceHistory: (key: StockKey, { signal }: Options = {}): Promise<PriceHistory> =>
+    demoRequest('stocks', () => demoPriceHistory(key), { signal }),
+
   portfolio: ({ signal }: Options = {}): Promise<Portfolio> =>
     demoRequest('portfolio', demoPortfolioState, { signal }),
 
@@ -56,4 +66,14 @@ export const demoServices = {
   addHolding: (request: AddHoldingRequest): Promise<PortfolioHolding> =>
     // Long enough to see the form's saving state.
     demoRequest('portfolio', () => addDemoHolding(request), { latencyMs: 700 }),
+
+  watchlist: ({ signal }: Options = {}): Promise<Watchlist> =>
+    demoRequest('watchlist', demoWatchlistState, { signal }),
+
+  /** Saves into this browser session's demo watchlist only. */
+  addToWatchlist: (key: StockKey): Promise<WatchlistItem> =>
+    demoRequest('watchlist', () => addDemoWatchlistItem(key), { latencyMs: 500 }),
+
+  removeFromWatchlist: (id: string): Promise<void> =>
+    demoRequest('watchlist', () => removeDemoWatchlistItem(id), { latencyMs: 400 }),
 }
