@@ -1,4 +1,5 @@
 import type { ListQuery } from '@/api/types/query'
+import type { FxRates } from '@/features/stocks/currency'
 import type { Market } from '@/features/stocks/markets'
 import type { PositionSide, Stock } from '@/features/stocks/types'
 import type { IsoDate } from '@/shared/formatting/dates'
@@ -62,3 +63,12 @@ export type ClosedTradeQuery = ListQuery<
   ClosedTradeSortField,
   { market: Market; outcome: TradeOutcome; side: PositionSide; from: IsoDate; to: IsoDate }
 >
+
+/** Closed trades with what's needed to total them in one currency. */
+export interface PortfolioHistory {
+  baseCurrency: CurrencyCode
+  /** Converts each trade's P/L into `baseCurrency` for the summary. */
+  fxRates: FxRates
+  /** Newest exit first. */
+  trades: ClosedTrade[]
+}

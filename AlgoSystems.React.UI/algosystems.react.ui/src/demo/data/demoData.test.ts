@@ -5,6 +5,13 @@
 import { describe, expect, it, vi } from 'vitest'
 import { summariseHistory } from '@/features/portfolio-history/calculations'
 import {
+  highlightLabel,
+  holdingPeriodLabel,
+  netPnlView,
+  profitFactorView,
+  winRateView,
+} from '@/features/portfolio-history/model'
+import {
   sectorAllocation,
   summarisePortfolio,
   valueHolding,
@@ -290,6 +297,24 @@ describe('portfolio history', () => {
         t?.holdingDays,
       ]).toEqual([pnl, ret, days])
     }
+  })
+
+  it('reproduces the design reference summary from its eight trades', () => {
+    const reference = demoClosedTrades.filter((t) => Number(t.id.slice(1)) <= 8)
+    // The reference's trades are all in USD and its figures are in dollars, so total in USD.
+    const s = summariseHistory(reference, { AUD: 1 / DEMO_FX_RATES.USD, USD: 1 }, 'USD')
+    const usd = (text: string) => text.replace(/USD\s/g, '$')
+
+    expect(reference).toHaveLength(8)
+    expect(usd(netPnlView(s).value)).toBe('+$918.50')
+    expect(winRateView(s)).toEqual({ value: '63%', detail: '5 wins · 3 losses' })
+    expect(usd(profitFactorView(s).value)).toBe('2.95')
+    expect(usd(profitFactorView(s).detail)).toBe('Avg win +$277.82 · Avg loss −$156.87')
+    expect(s.grossProfit).toBeCloseTo(1389.1, 6)
+    expect(s.grossLoss).toBeCloseTo(-470.6, 6)
+    expect(usd(highlightLabel(s.bestTrade, s))).toBe('TSM · +$360.00')
+    expect(usd(highlightLabel(s.worstTrade, s))).toBe('AVGO · −$213.36')
+    expect(holdingPeriodLabel(s.averageHoldingDays)).toBe('26 days')
   })
 
   it('derives every trade from its prices and dates', () => {

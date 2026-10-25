@@ -4,6 +4,7 @@
  * these functions with HTTP calls that return the same types.
  */
 import type { MarketOverview } from '@/features/dashboard/types'
+import type { PortfolioHistory } from '@/features/portfolio-history/types'
 import type {
   AddHoldingRequest,
   Portfolio,
@@ -19,6 +20,8 @@ import {
 import type { PriceHistory, Stock, StockKey } from '@/features/stocks/types'
 import type { Watchlist, WatchlistItem } from '@/features/watchlist/types'
 import { demoMarketOverview } from './data/marketData'
+import { demoPortfolio } from './data/portfolio'
+import { demoClosedTrades } from './data/portfolioHistory'
 import { addDemoHolding, demoPortfolioPerformance, demoPortfolioState } from './data/portfolioStore'
 import { demoScanResults, demoScanRuns } from './data/scans'
 import { demoPriceHistory, demoStocks } from './data/stocks'
@@ -61,6 +64,18 @@ export const demoServices = {
 
   portfolioPerformance: ({ signal }: Options = {}): Promise<PortfolioPerformance> =>
     demoRequest('portfolio', demoPortfolioPerformance, { signal }),
+
+  /** Closed trades, with the portfolio's base currency and rates for totals. */
+  portfolioHistory: ({ signal }: Options = {}): Promise<PortfolioHistory> =>
+    demoRequest(
+      'history',
+      () => ({
+        baseCurrency: demoPortfolio.baseCurrency,
+        fxRates: demoPortfolio.fxRates,
+        trades: demoClosedTrades,
+      }),
+      { signal },
+    ),
 
   /** Saves into this browser session's demo portfolio only. */
   addHolding: (request: AddHoldingRequest): Promise<PortfolioHolding> =>
