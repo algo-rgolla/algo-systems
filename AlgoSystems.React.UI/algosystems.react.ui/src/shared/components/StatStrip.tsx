@@ -66,12 +66,15 @@ export function StatCell({
         <Box
           component="span"
           sx={{
+            // While loading, a 72px placeholder that can shrink inside narrow cells.
+            flex: loading ? '0 1 72px' : undefined,
+            minWidth: 0,
             fontSize: { xs: '0.875rem', md: '1.0625rem' },
             fontWeight: 780,
             letterSpacing: '-0.3px',
           }}
         >
-          {loading ? <Skeleton width={72} /> : value}
+          {loading ? <Skeleton /> : value}
         </Box>
         {detail && !loading && (
           <Box

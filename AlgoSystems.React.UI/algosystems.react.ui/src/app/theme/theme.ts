@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import type {} from '@mui/x-data-grid/themeAugmentation'
+import { MOBILE_NAV_HEIGHT, SAFE_AREA_BOTTOM } from '@/app/layout/dimensions'
 import { palette, tokens } from './palette'
 
 declare module '@mui/material/Paper' {
@@ -199,6 +200,12 @@ export const theme = createTheme(base, {
         },
         footerContainer: { borderTop: `1px solid ${tokens.lineSubtle}` },
         overlay: { backgroundColor: 'transparent' },
+      },
+    },
+    MuiSnackbar: {
+      styleOverrides: {
+        // Toasts sit above the phone bottom navigation instead of behind it.
+        root: { [phone]: { bottom: `calc(${MOBILE_NAV_HEIGHT + 8}px + ${SAFE_AREA_BOTTOM})` } },
       },
     },
     MuiTooltip: {

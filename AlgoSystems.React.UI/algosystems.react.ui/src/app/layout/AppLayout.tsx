@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
-import { Outlet } from 'react-router'
-import { MOBILE_NAV_CLEARANCE, SIDEBAR_WIDTH, TOP_BAR_HEIGHT } from './dimensions'
+import { Outlet, ScrollRestoration } from 'react-router'
+import { MOBILE_NAV_CLEARANCE, SAFE_AREA_BOTTOM, SIDEBAR_WIDTH, TOP_BAR_HEIGHT } from './dimensions'
 import { MobileNavigation } from './MobileNavigation'
 import { Sidebar } from './Sidebar'
 import { MAIN_CONTENT_ID, SkipLink } from './SkipLink'
@@ -38,13 +38,19 @@ export function AppLayout() {
             mx: 'auto',
             pt: { xs: '12px', lg: '14px' },
             px: { xs: '10px', sm: '14px', md: '20px', lg: '30px' },
-            pb: { xs: `${MOBILE_NAV_CLEARANCE}px`, md: '38px', lg: '48px' },
+            pb: {
+              xs: `calc(${MOBILE_NAV_CLEARANCE}px + ${SAFE_AREA_BOTTOM})`,
+              md: '38px',
+              lg: '48px',
+            },
           }}
         >
           <Outlet />
         </Box>
       </Box>
       <MobileNavigation />
+      {/* New pages open at the top; Back and Forward return to the previous scroll position. */}
+      <ScrollRestoration />
     </>
   )
 }

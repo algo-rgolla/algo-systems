@@ -42,7 +42,10 @@ export function TopBar() {
       <Toolbar
         disableGutters
         sx={{
-          height: { xs: TOP_BAR_HEIGHT.phone, md: TOP_BAR_HEIGHT.desktop },
+          // The AppBar's 1px bottom border makes up the rest of the height. minHeight overrides
+          // Toolbar's own responsive minimum (64px above 600px wide).
+          height: { xs: TOP_BAR_HEIGHT.phone - 1, md: TOP_BAR_HEIGHT.desktop - 1 },
+          minHeight: { xs: TOP_BAR_HEIGHT.phone - 1, md: TOP_BAR_HEIGHT.desktop - 1 },
           px: { xs: '11px', sm: '15px', md: '26px' },
           justifyContent: 'space-between',
           gap: 2,
@@ -50,7 +53,9 @@ export function TopBar() {
       >
         <Brand />
         {/* Placeholder until authentication is wired up. */}
-        <Avatar aria-label="User profile">U</Avatar>
+        <Avatar role="img" aria-label="User profile">
+          U
+        </Avatar>
       </Toolbar>
       {busy && (
         <LinearProgress sx={{ position: 'absolute', bottom: -1, left: 0, right: 0, height: 2 }} />
