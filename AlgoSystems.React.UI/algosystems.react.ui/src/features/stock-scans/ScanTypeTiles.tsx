@@ -104,9 +104,11 @@ type Summaries = ScanSummary[] | undefined
 const countOf = (summaries: Summaries, scanType: ScanType) =>
   summaries?.find((s) => s.scanType === scanType)?.resultCount ?? null
 
-function TileGrid({ children }: { children: ReactNode }) {
+function TileGrid({ children, label }: { children: ReactNode; label: string }) {
   return (
     <Box
+      role="group"
+      aria-label={label}
       sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
@@ -129,7 +131,7 @@ export function ScanLinkTiles({
   linkTo: (scanType: ScanType) => string
 }) {
   return (
-    <TileGrid>
+    <TileGrid label="Today’s scans">
       {SCAN_ORDER.map((scanType) => {
         const count = countOf(summaries, scanType)
         const label = SCAN_CATALOG[scanType].label
@@ -163,7 +165,7 @@ export function ScanTypeSelector({
   onChange: (scanType: ScanType) => void
 }) {
   return (
-    <TileGrid>
+    <TileGrid label="Scan type">
       {SCAN_ORDER.map((scanType) => (
         <Tooltip key={scanType} title={SCAN_CATALOG[scanType].description} describeChild>
           <ButtonBase

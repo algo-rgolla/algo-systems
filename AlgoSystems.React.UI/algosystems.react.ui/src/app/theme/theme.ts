@@ -172,7 +172,13 @@ export const theme = createTheme(base, {
           fontSize: rem(12),
           '--DataGrid-rowBorderColor': tokens.lineSubtle,
           '--DataGrid-t-color-interactive-hover': tokens.rowHover,
-          [phone]: { fontSize: rem(11) },
+          [phone]: {
+            fontSize: rem(11),
+            // Room for the page arrows: drop the rows-per-page picker on phones. Scoped under
+            // the pagination root to outrank the grid's own rule, which shows it from `sm` up.
+            '& .MuiTablePagination-root .MuiTablePagination-selectLabel, & .MuiTablePagination-root .MuiTablePagination-input':
+              { display: 'none' },
+          },
         },
         columnHeaders: { borderBottom: `1px solid ${tokens.inputBorder}` },
         columnHeader: {

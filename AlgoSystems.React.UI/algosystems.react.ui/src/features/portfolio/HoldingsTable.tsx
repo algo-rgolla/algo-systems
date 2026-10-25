@@ -24,7 +24,7 @@ function columns(baseCurrency: CurrencyCode): Column[] {
       field: 'symbol',
       headerName: 'Stock',
       flex: 1,
-      minWidth: 180,
+      minWidth: 170,
       valueGetter: (_value, row) => row.stock.symbol,
       renderCell: ({ row }) => (
         <TwoLineCell
@@ -37,7 +37,7 @@ function columns(baseCurrency: CurrencyCode): Column[] {
       field: 'price',
       headerName: 'Price',
       type: 'number',
-      width: 120,
+      width: 110,
       valueGetter: (_value, row) => row.quote.price,
       renderCell: ({ row }) => formatPrice(row.quote.price, row.stock.currency),
     },
@@ -45,7 +45,7 @@ function columns(baseCurrency: CurrencyCode): Column[] {
       field: 'dayChange',
       headerName: 'Day change',
       type: 'number',
-      width: 110,
+      width: 100,
       valueGetter: (_value, row) => row.quote.changePercent,
       renderCell: ({ value }) => <SignedValue value={value ?? null} format={formatPercent} />,
     },
@@ -53,28 +53,30 @@ function columns(baseCurrency: CurrencyCode): Column[] {
       field: 'quantity',
       headerName: 'Qty',
       type: 'number',
-      width: 90,
+      width: 80,
       renderCell: ({ row }) => formatQuantity(row.quantity),
     },
     {
       field: 'averageCost',
       headerName: 'Avg cost',
       type: 'number',
-      width: 120,
+      width: 110,
       renderCell: ({ row }) => formatPrice(row.averageCost, row.stock.currency),
     },
     {
       field: 'marketValueBase',
-      headerName: `Value (${baseCurrency})`,
+      headerName: 'Value',
+      description: `Market value in ${baseCurrency}`,
       type: 'number',
-      width: 120,
+      width: 105,
       renderCell: ({ row }) => base(row.marketValueBase),
     },
     {
       field: 'unrealisedPnlBase',
-      headerName: `P/L (${baseCurrency})`,
+      headerName: 'P/L',
+      description: `Unrealised profit or loss in ${baseCurrency}`,
       type: 'number',
-      width: 120,
+      width: 105,
       renderCell: ({ row }) => (
         <SignedValue value={row.unrealisedPnlBase} format={(v) => base(v, true)} />
       ),
@@ -83,7 +85,7 @@ function columns(baseCurrency: CurrencyCode): Column[] {
       field: 'unrealisedPnlPercent',
       headerName: 'Return',
       type: 'number',
-      width: 100,
+      width: 95,
       renderCell: ({ row }) => (
         <SignedValue value={row.unrealisedPnlPercent} format={formatPercent} />
       ),
@@ -91,14 +93,16 @@ function columns(baseCurrency: CurrencyCode): Column[] {
     {
       field: 'weightPercent',
       headerName: 'Weight',
+      description: 'Share of total market value',
       type: 'number',
-      width: 90,
+      width: 85,
       renderCell: ({ row }) => formatPercent(row.weightPercent, { signed: false, decimals: 1 }),
     },
     {
       field: 'sector',
       headerName: 'Sector',
-      width: 170,
+      flex: 0.6,
+      minWidth: 130,
       valueGetter: (_value, row) => row.stock.sector,
       renderCell: ({ value }) => (
         <Box component="span" sx={{ color: 'text.secondary' }}>

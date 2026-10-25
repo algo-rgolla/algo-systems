@@ -185,6 +185,10 @@ describe('scans', () => {
           expect(metrics.ema9).toBeCloseTo(ema(closes, 9).at(-1) ?? NaN, 10)
           expect(metrics.ema21).toBeCloseTo(ema(closes, 21).at(-1) ?? NaN, 10)
           expect(metrics.ema63).toBeCloseTo(ema(closes, 63).at(-1) ?? NaN, 10)
+          if (metrics.sessionsSinceCross != null) {
+            const bars = demoPriceHistory(r.stock.key).bars
+            expect(metrics.crossedOn).toBe(bars[bars.length - 1 - metrics.sessionsSinceCross].date)
+          }
           expect(r.signal.strength).toBe(
             metrics.sessionsSinceCross != null &&
               metrics.sessionsSinceCross < SCAN_RULES.emaCrossover.fresh

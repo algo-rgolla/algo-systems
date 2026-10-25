@@ -1,21 +1,26 @@
 import { useQuery } from '@tanstack/react-query'
-import { httpClient } from '@/api/client/httpClient'
+import { demoServices } from '@/demo/services'
 import { summariseScanRuns } from './model'
-import type { ScanRun } from './types'
+import type { ScanType } from './types'
 
-/**
- * Proposed endpoints (served by the demo data until the API has them):
- * - GET /api/scans/runs: the latest run of every scan on every market
- */
 export const scanKeys = {
   all: ['scans'] as const,
   runs: () => [...scanKeys.all, 'runs'] as const,
+  results: (scanType: ScanType) => [...scanKeys.all, 'results', scanType] as const,
 }
 
+/** The latest run of each scan, totalled across markets. */
 export function useScanSummaries() {
   return useQuery({
     queryKey: scanKeys.runs(),
-    queryFn: ({ signal }) => httpClient.get<ScanRun[]>('/api/scans/runs', { signal }),
+    queryFn: ({ signal }) => demoServices.scanRuns({ signal }),
     select: summariseScanRuns,
+  })
+}
+
+export function useScanResults(scanType: ScanType) {
+  return useQuery({
+    queryKey: scanKeys.results(scanType),
+    queryFn: ({ signal }) => demoServices.scanResults(scanType, { signal }),
   })
 }

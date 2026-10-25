@@ -79,7 +79,8 @@ function bigGainer(item: QuotedStock): Candidate | null {
 
 /** EMA 9 above EMA 21 above EMA 63, with the close above EMA 9. */
 function emaCrossover(item: QuotedStock): Candidate | null {
-  const closes = demoPriceHistory(item.stock.key).bars.map((b) => b.close)
+  const bars = demoPriceHistory(item.stock.key).bars
+  const closes = bars.map((b) => b.close)
   const [e9, e21, e63] = [9, 21, 63].map((period) => ema(closes, period))
   const last = closes.length - 1
   const ema9 = e9[last]
@@ -110,7 +111,14 @@ function emaCrossover(item: QuotedStock): Candidate | null {
       age < SCAN_RULES.emaCrossover.fresh
         ? { label: 'Fresh crossover', strength: 'strong' }
         : { label: 'Trend confirmed', strength: 'moderate' },
-    metrics: { scanType: 'ema-crossover', ema9, ema21, ema63, sessionsSinceCross },
+    metrics: {
+      scanType: 'ema-crossover',
+      ema9,
+      ema21,
+      ema63,
+      sessionsSinceCross,
+      crossedOn: sessionsSinceCross == null ? null : bars[last - sessionsSinceCross].date,
+    },
   }
 }
 

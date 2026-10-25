@@ -1,21 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
-import { httpClient } from '@/api/client/httpClient'
-import type { Stock } from './types'
+import { demoServices } from '@/demo/services'
 
-/**
- * Proposed endpoint (served by the demo data until the API has it):
- * - GET /api/stocks: every listed stock the app has prices for, for symbol lookup
- */
 export const stockKeys = {
   all: ['stocks'] as const,
   directory: () => [...stockKeys.all, 'directory'] as const,
 }
 
+/** Every stock the app has (demo) prices for, for symbol lookup. */
 export function useStockDirectory() {
   return useQuery({
     queryKey: stockKeys.directory(),
-    queryFn: ({ signal }) => httpClient.get<Stock[]>('/api/stocks', { signal }),
-    // The list of listed stocks changes rarely.
-    staleTime: 60 * 60 * 1000,
+    queryFn: ({ signal }) => demoServices.stockDirectory({ signal }),
+    staleTime: Infinity,
   })
 }

@@ -7,6 +7,7 @@ export interface ScanSummary {
   scanType: ScanType
   resultCount: number
   countByMarket: Partial<Record<Market, number>>
+  runAtByMarket: Partial<Record<Market, IsoDateTime>>
   /** The most recent run of this scan on any market. */
   lastRunAt: IsoDateTime | null
 }
@@ -19,6 +20,7 @@ export function summariseScanRuns(runs: ScanRun[]): ScanSummary[] {
       scanType,
       resultCount: own.reduce((total, run) => total + run.resultCount, 0),
       countByMarket: Object.fromEntries(own.map((run) => [run.market, run.resultCount])),
+      runAtByMarket: Object.fromEntries(own.map((run) => [run.market, run.runAt])),
       lastRunAt:
         own.map((run) => run.runAt).sort((a, b) => Date.parse(b) - Date.parse(a))[0] ?? null,
     }

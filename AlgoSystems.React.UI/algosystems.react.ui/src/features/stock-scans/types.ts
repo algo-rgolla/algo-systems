@@ -1,7 +1,7 @@
 import type { ListQuery } from '@/api/types/query'
 import type { Market } from '@/features/stocks/markets'
 import type { QuotedStock } from '@/features/stocks/types'
-import type { IsoDateTime } from '@/shared/formatting/dates'
+import type { IsoDate, IsoDateTime } from '@/shared/formatting/dates'
 
 /** The three scans the batch runs every evening, in display order. */
 export const SCAN_TYPES = ['unusual-volume', 'big-gainers', 'ema-crossover'] as const
@@ -36,6 +36,8 @@ export type ScanMetrics =
       ema63: number
       /** Sessions since EMA 9 crossed above EMA 21; null if before the available history. */
       sessionsSinceCross: number | null
+      /** The session on which EMA 9 closed above EMA 21; null if before the available history. */
+      crossedOn: IsoDate | null
     }
 
 export interface ScanResult extends QuotedStock {
