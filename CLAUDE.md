@@ -13,11 +13,11 @@ The .NET solution is `AlgoSystems.sln` (mostly net8.0; developed in Visual Studi
 ```bash
 dotnet build AlgoSystems.sln
 dotnet run --project AlgoSystems.Core.Api               # Swagger at /swagger (root redirects there)
-dotnet test AlgoSystems.Indicator.Test                  # NUnit; the only suite with active tests
-dotnet test AlgoSystems.Indicator.Test --filter "FullyQualifiedName~<TestName>"
+dotnet test AlgoSystems.Test                            # NUnit; Watchlist rules and service tests
+dotnet test AlgoSystems.Test --filter "FullyQualifiedName~<TestName>"
 ```
 
-`AlgoSystems.Test` (NUnit, business logic) exists, but its tests are commented out and need a real database.
+`AlgoSystems.Test` integration tests create and drop a throwaway `AlgoSystemsTest_<guid>` database on a real SQL Server (default `(local)` with Windows auth; override with the `ALGOSYSTEMS_TEST_SQLSERVER` connection string). They are skipped when no server is reachable. Its older `ScanServiceTests.cs` is commented out. `AlgoSystems.Indicator.Test` builds, but its tests are commented out too.
 
 React UI (`AlgoSystems.React.UI/algosystems.react.ui`). It runs on mock data, so the API doesn't need to be running:
 
@@ -42,7 +42,8 @@ Active projects (the ones in `AlgoSystems.sln`) and how they depend on each othe
   - `EodhdDownloadService`: pulls exchange symbols and symbol details from EODHD and clears the daily scan and watchlist data.
   - `ScanBusinessLogic`: runs the daily product scans (`ProcessEodProductScans`) and writes them to `ProductScanResult`.
   - `EodhdPortfolioService` / `PortfolioService`: manage the simulated long and algo portfolios (`ManageLongPortfolio`, `ManageAlgoPortfolio`).
-  - `Search*`, `Watchlist*`, `PortfolioHistory*`: read paths used by the API.
+  - `Watchlists/WatchlistService` (watchlist read and delete, used by `WatchListController`) and `Watchlists/WatchlistRules` (the pure "show today" rule). It is registered as a concrete class; the folder is plural because a `Watchlist` namespace would shadow the `Watchlist` entity.
+  - `Search*`, `PortfolioHistory*`: read paths used by the API.
 - **BusinessObjects** (`AlgoSystems.BusinessObjects`): DTOs and view models returned by the API.
 - **AlgoSystems.Common**: shared enums, constants, helpers, and `IUserContext`.
 - **AlgoSystems.Indicator**: technical indicator calculators (EMA, RSI, MACD, ATR, and others) built on `IndicatorCalculatorBase` / `Ohlc`.

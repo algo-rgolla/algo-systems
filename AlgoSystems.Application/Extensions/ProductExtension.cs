@@ -29,13 +29,13 @@ namespace AlgoSystems.Application.Extensions
 
             return  viewModel;
         }
-        public static ProductViewModel ConvertWatchlistViewModel(this EodhdSymbolDetail product, Watchlist watchlist, EodhdSymbol eodSymbol=null)
+        public static ProductViewModel ConvertWatchlistViewModel(this EodhdSymbolDetail product, Watchlist watchlist, string exchange)
         {
             var viewModel = new ProductViewModel
             {
                 Id = watchlist.Id,
                 Symbol = product.Code,
-                Exchange = eodSymbol.Exchange,
+                Exchange = exchange,
                 Name = product.Name,
                 MarketCap = product.MarketCapitalization != null ? Utils.ToKMB((decimal)product.MarketCapitalization) : string.Empty,
                 ClosePrice = product.Close.ToString(),

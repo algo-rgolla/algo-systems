@@ -15,8 +15,6 @@ namespace AlgoSystems.Application.Interfaces
         public Task<bool> ProcessEodProductScans();
         public ProductsViewModel GetProductScanResult(LongScanViewModel request);
         Task<ProductsViewModel> GetProductScanResultAsync(LongScanViewModel request);
-        Task<ProductsViewModel> GetWatchlistAsync();
-        Task<bool> DeleteWatchByIdAsync(int id);
         Task<ScanCounterListDto> GetScanCounters();
         public Task<bool> ProcessUSProductScans();
 

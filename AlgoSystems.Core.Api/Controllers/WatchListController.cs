@@ -1,7 +1,4 @@
-﻿using AlgoSystems.Application.Interfaces;
-using AlgoSystems.Domain.Entities.Models;
-using BusinessObjects;
-using Microsoft.AspNetCore.Http;
+﻿using AlgoSystems.Application.Watchlists;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoSystems.Core.Api.Controllers
@@ -10,62 +7,31 @@ namespace AlgoSystems.Core.Api.Controllers
     [ApiController]
     public class WatchListController : ControllerBase
     {
-        private readonly IScanBusinessLogic _scanBusinessLogic;
+        private readonly WatchlistService _watchlistService;
 
-        public WatchListController(IScanBusinessLogic scanBusinessLogic)
+        public WatchListController(WatchlistService watchlistService)
         {
-            _scanBusinessLogic = scanBusinessLogic;
+            _watchlistService = watchlistService;
         }
 
         [HttpGet("api/eodhd/products/watchlist")]
-        public async Task<IActionResult> GetWatchList()
+        public async Task<IActionResult> GetWatchList(CancellationToken cancellationToken)
         {
-            var products = await _scanBusinessLogic.GetWatchlistAsync();
+            var products = await _watchlistService.GetWatchlistAsync(cancellationToken);
 
             return Ok(products);
         }
 
-        // Create a new watchlist item
-        //[HttpPost]
-        //public async Task<IActionResult> CreateWatchlistItem([FromBody] WatchlistItemDto watchlistItem)
-        //{
-        //    if (watchlistItem == null)
-        //    {
-        //        return BadRequest("Invalid watchlist item.");
-        //    }
-
-        //    var createdItem = await _scanBusinessLogic.CreateWatchlistAsync(watchlistItem);
-        //    return CreatedAtAction(nameof(GetWatchList), new { id = createdItem.Id }, createdItem);
-        //}
-
-        // Edit an existing watchlist item
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> EditWatchlistItem(int id, [FromBody] WatchlistItemDto watchlistItem)
-        //{
-        //    if (watchlistItem == null || id <= 0)
-        //    {
-        //        return BadRequest("Invalid request.");
-        //    }
-
-        //    //var updatedItem = await _scanBusinessLogic.UpdateWatchlistAsync(id, watchlistItem);
-        //    //if (updatedItem == null)
-        //    //{
-        //    //    return NotFound("Watchlist item not found.");
-        //    //}
-
-        //    //return Ok(updatedItem);
-        //}
-
         // Delete a watchlist item by Id
         [HttpDelete("api/watchlist/delete/{id}")]
-        public async Task<IActionResult> DeleteById(int id)
+        public async Task<IActionResult> DeleteById(int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
             {
                 return BadRequest("Invalid Id.");
             }
 
-            var result = await _scanBusinessLogic.DeleteWatchByIdAsync(id);
+            var result = await _watchlistService.DeleteWatchlistItemAsync(id, cancellationToken);
             if (!result)
             {
                 return NotFound("Watchlist item not found.");
@@ -73,6 +39,5 @@ namespace AlgoSystems.Core.Api.Controllers
 
             return Ok(true);
         }
-
     }
 }

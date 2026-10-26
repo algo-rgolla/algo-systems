@@ -1,6 +1,7 @@
 ﻿using AlgoSystems.Application.Interfaces;
 using AlgoSystems.Application.Repositories;
 using AlgoSystems.Application.Services;
+using AlgoSystems.Application.Watchlists;
 using AlgoSystems.Common.Interfaces;
 using AlgoSystems.Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace AlgoSystems.Core.Api.Common
             services.AddScoped<DbContext, AlgoSystemsContext>();
 
             //services.AddScoped<IDownloadService, DownloadService>();
-            services.AddScoped<IWatchlistService, WatchlistService>();
+            services.AddScoped<WatchlistService>();
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IScanBusinessLogic, ScanBusinessLogic>();
             services.AddScoped<ICommonService, CommonService>();
