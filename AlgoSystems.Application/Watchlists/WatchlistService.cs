@@ -70,7 +70,7 @@ namespace AlgoSystems.Application.Watchlists
                 if (item.StockCode == null || existingSymbols.Contains(item.StockCode))
                     continue;
 
-                if (!details.TryGetValue(item.StockCode, out var product) || !WatchlistRules.IsValidWatchlistItem(product))
+                if (!details.TryGetValue(item.StockCode, out var product))
                     continue;
 
                 var exchange = exchanges.TryGetValue(product.Code, out var symbolExchange) ? symbolExchange : DefaultExchange;
@@ -92,22 +92,24 @@ namespace AlgoSystems.Application.Watchlists
         /// </summary>
         public async Task<bool> DeleteWatchlistItemAsync(int id, CancellationToken cancellationToken)
         {
-            string email = _userContext.Email;
-            if (string.IsNullOrEmpty(email) || !DeleteAuthorisedEmails.Contains(email))
+            string? email = _userContext.Email;
+            if (!string.IsNullOrEmpty(email) && !DeleteAuthorisedEmails.Contains(email))
             {
                 _logger.LogWarning("Watchlist item {WatchlistId} not deleted: user is not authorised to delete", id);
                 return false;
             }
 
-            var deleted = await _dbContext.Watchlists
-                .Where(x => x.WatchlistId == id)
-                .ExecuteDeleteAsync(cancellationToken);
+            var watchlistItem = await _dbContext.Watchlists
+                .FirstOrDefaultAsync(x => x.WatchlistId == id, cancellationToken);
 
-            if (deleted == 0)
+            if (watchlistItem == null)
             {
                 _logger.LogWarning("Watchlist item {WatchlistId} not found", id);
                 return false;
             }
+
+            _dbContext.Watchlists.Remove(watchlistItem);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Watchlist item {WatchlistId} deleted", id);
             return true;
