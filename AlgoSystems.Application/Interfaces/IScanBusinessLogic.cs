@@ -1,22 +1,12 @@
-﻿using BusinessObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace AlgoSystems.Application.Interfaces
 {
+    /// <summary>The daily scan batches. The API reads scan results through <c>ProductScans.ProductScanService</c>.</summary>
     public interface IScanBusinessLogic
     {
-        //public void ProcessProductScans();
-
-        //public void ProcessAsxProductScans();
-        public Task<bool> ProcessEodProductScans();
-        public ProductsViewModel GetProductScanResult(LongScanViewModel request);
-        Task<ProductsViewModel> GetProductScanResultAsync(LongScanViewModel request);
-        Task<ScanCounterListDto> GetScanCounters();
-        public Task<bool> ProcessUSProductScans();
-
+        public Task<bool> ProcessEodProductScans(CancellationToken cancellationToken = default);
+        public Task<bool> ProcessUSProductScans(CancellationToken cancellationToken = default);
     }
 }

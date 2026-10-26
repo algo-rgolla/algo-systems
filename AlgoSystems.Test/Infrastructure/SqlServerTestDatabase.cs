@@ -1,6 +1,7 @@
 using AlgoSystems.Domain.Entities.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AlgoSystems.Test.Infrastructure
 {
@@ -44,10 +45,11 @@ namespace AlgoSystems.Test.Infrastructure
             return database;
         }
 
-        public AlgoSystemsContext CreateContext()
+        public AlgoSystemsContext CreateContext(params IInterceptor[] interceptors)
         {
             var options = new DbContextOptionsBuilder<AlgoSystemsContext>()
                 .UseSqlServer(_connectionString)
+                .AddInterceptors(interceptors)
                 .Options;
             var context = new TestAlgoSystemsContext(options);
 
@@ -66,6 +68,7 @@ namespace AlgoSystems.Test.Infrastructure
         {
             await using var context = CreateContext();
             await context.Watchlists.ExecuteDeleteAsync();
+            await context.ProductScanResults.ExecuteDeleteAsync();
             await context.EodhdSymbolDetails.ExecuteDeleteAsync();
             await context.EodhdSymbols.ExecuteDeleteAsync();
         }

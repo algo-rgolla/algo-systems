@@ -1,6 +1,5 @@
-﻿using AlgoSystems.Application.Interfaces;
+﻿using AlgoSystems.Application.ProductScans;
 using BusinessObjects;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoSystems.Core.Api.Controllers
@@ -9,34 +8,27 @@ namespace AlgoSystems.Core.Api.Controllers
     [ApiController]
     public class ScansController : ControllerBase
     {
-        private readonly IScanBusinessLogic _scanBusinessLogic;
+        private readonly ProductScanService _productScanService;
 
-        public ScansController(IScanBusinessLogic scanBusinessLogic)
+        public ScansController(ProductScanService productScanService)
         {
-            _scanBusinessLogic = scanBusinessLogic;
+            _productScanService = productScanService;
         }
 
         [HttpGet("api/longscan/get-scan-result")]
-        public async Task<IActionResult> GetProductScanResult([FromQuery] LongScanViewModel request)
+        public async Task<IActionResult> GetProductScanResult([FromQuery] LongScanViewModel request, CancellationToken cancellationToken)
         {
-            var products = await _scanBusinessLogic.GetProductScanResultAsync(request);
+            var products = await _productScanService.GetScanResultsAsync(request.ScanName, cancellationToken);
 
             return Ok(products);
         }
 
         [HttpGet("api/longscan/scan-counters")]
-        public async Task<IActionResult> GetScanCounters()
+        public async Task<IActionResult> GetScanCounters(CancellationToken cancellationToken)
         {
-            var products = await _scanBusinessLogic.GetScanCounters();
+            var counters = await _productScanService.GetScanCountersAsync(cancellationToken);
 
-            return Ok(products);
+            return Ok(counters);
         }
-
-        //var userId = HttpContext.Items["UserId"]?.ToString();
-        //var email = HttpContext.Items["Email"]?.ToString();
-
-        // You can now log the user or use their ID/email
-        //Console.WriteLine($"Request made by user: {userId}, email: {email}");
-
     }
 }

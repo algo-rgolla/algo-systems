@@ -13,7 +13,7 @@ The .NET solution is `AlgoSystems.sln` (mostly net8.0; developed in Visual Studi
 ```bash
 dotnet build AlgoSystems.sln
 dotnet run --project AlgoSystems.Core.Api               # Swagger at /swagger (root redirects there)
-dotnet test AlgoSystems.Test                            # NUnit; Watchlist rules and service tests
+dotnet test AlgoSystems.Test                            # NUnit; Watchlist and ProductScans rules and service tests
 dotnet test AlgoSystems.Test --filter "FullyQualifiedName~<TestName>"
 ```
 
@@ -40,7 +40,8 @@ Active projects (the ones in `AlgoSystems.sln`) and how they depend on each othe
 - **Repository**: thin repositories (`LookupRepository`, `WatchlistRepository`, base/generic repositories) over the context.
 - **AlgoSystems.Application**: the project file is `AlgoSystems.BusinessLogic.csproj`, but the namespaces are `AlgoSystems.Application.*` (and `AlgoSystems.BusinessLogic.Common` for `Common/`). It holds all business logic. Each interface in `Interfaces/` has its implementation in `Services/`. Key services:
   - `EodhdDownloadService`: pulls exchange symbols and symbol details from EODHD and clears the daily scan and watchlist data.
-  - `ScanBusinessLogic`: runs the daily product scans (`ProcessEodProductScans`) and writes them to `ProductScanResult`.
+  - `ScanBusinessLogic` (`IScanBusinessLogic`): the batch side of scans. `ProcessEodProductScans` / `ProcessUSProductScans` refresh symbol details from EODHD, apply the scans in `Common/ScanHelper` and write hits to `ProductScanResult` and `Watchlist`. The API doesn't use it.
+  - `ProductScans/ProductScanService` (scan results and scan counters, used by `ScansController`), `ProductScans/ProductScanCatalog` (the counter labels) and `ProductScans/ProductScanRules` (the batches' pure pre-filters, five-day gain and position size). The service is registered as a concrete class; the folder isn't called `Scans` because that namespace would shadow `AlgoSystems.Common.Scans`. `AlgoSystems.Test` sees the project's internals (`InternalsVisibleTo`), so `ScanHelper` stays internal.
   - `EodhdPortfolioService` / `PortfolioService`: manage the simulated long and algo portfolios (`ManageLongPortfolio`, `ManageAlgoPortfolio`).
   - `Watchlists/WatchlistService` (watchlist read and delete, used by `WatchListController`) and `Watchlists/WatchlistRules` (the pure "show today" rule). It is registered as a concrete class; the folder is plural because a `Watchlist` namespace would shadow the `Watchlist` entity.
   - `Search*`, `PortfolioHistory*`: read paths used by the API.

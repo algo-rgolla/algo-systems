@@ -1,4 +1,5 @@
 ﻿using AlgoSystems.Application.Interfaces;
+using AlgoSystems.Application.ProductScans;
 using AlgoSystems.Application.Repositories;
 using AlgoSystems.Application.Services;
 using AlgoSystems.Application.Watchlists;
@@ -19,8 +20,8 @@ namespace AlgoSystems.Core.Api.Common
 
             //services.AddScoped<IDownloadService, DownloadService>();
             services.AddScoped<WatchlistService>();
+            services.AddScoped<ProductScanService>();
             services.AddScoped<ISearchService, SearchService>();
-            services.AddScoped<IScanBusinessLogic, ScanBusinessLogic>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IPortfolioService, PortfolioService>();
             services.AddScoped<IEodhdPortfolioService, EodhdPortfolioService>();
