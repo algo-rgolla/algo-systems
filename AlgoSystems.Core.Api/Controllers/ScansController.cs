@@ -7,11 +7,11 @@ namespace AlgoSystems.Core.Api.Controllers
 {
     //[Route("api/[controller]")]
     [ApiController]
-    public class LongScanController : ControllerBase
+    public class ScansController : ControllerBase
     {
         private readonly IScanBusinessLogic _scanBusinessLogic;
 
-        public LongScanController(IScanBusinessLogic scanBusinessLogic)
+        public ScansController(IScanBusinessLogic scanBusinessLogic)
         {
             _scanBusinessLogic = scanBusinessLogic;
         }
