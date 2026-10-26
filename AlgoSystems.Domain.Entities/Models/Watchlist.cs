@@ -5,7 +5,7 @@ namespace AlgoSystems.Domain.Entities.Models;
 
 public partial class Watchlist
 {
-    public int Id { get; set; }
+    public int WatchlistId { get; set; }
 
     public string StockCode { get; set; }
 
@@ -19,21 +19,9 @@ public partial class Watchlist
 
     public string OrderStatus { get; set; }
 
-    public long? Volume { get; set; }
-
-    public DateTime? CloseDate { get; set; }
-
-    public decimal? ClosePrice { get; set; }
-
-    public string ScanType { get; set; }
-
-    public decimal? ProfitLoss { get; set; }
+    public int? Volume { get; set; }
 
     public string Comments { get; set; }
-
-    public string BuyReason { get; set; }
-
-    public string SellReason { get; set; }
 
     public decimal? Atr { get; set; }
 }

@@ -37,7 +37,7 @@ namespace AlgoSystems.Test.Watchlists
             }
 
             await using var context = CreateContext();
-            var id = await context.Watchlists.Select(x => x.Id).SingleAsync();
+            var id = await context.Watchlists.Select(x => x.WatchlistId).SingleAsync();
             var service = Create(context, new TestUserContext(AdminEmail));
 
             Assert.That(() => service.DeleteWatchlistItemAsync(id, new CancellationToken(canceled: true)),

@@ -33,7 +33,7 @@ namespace AlgoSystems.Application.Extensions
         {
             var viewModel = new ProductViewModel
             {
-                Id = watchlist.Id,
+                Id = watchlist.WatchlistId,
                 Symbol = product.Code,
                 Exchange = exchange,
                 Name = product.Name,
@@ -41,7 +41,6 @@ namespace AlgoSystems.Application.Extensions
                 ClosePrice = product.Close.ToString(),
                 ChangePercent = Math.Round(Convert.ToDouble(product.ChangeP), 2).ToString(),
                 ScanDate = watchlist.OpenData != null ? watchlist.OpenData.Value : DateTime.MinValue,
-                ScanType = watchlist.ScanType,
                 StopLoss = watchlist.StopPrice.HasValue ? watchlist.StopPrice.Value.ToString() : string.Empty,
                 Volume = watchlist.Volume.HasValue ? watchlist.Volume.Value.ToString() : string.Empty,
                 Atr = watchlist.Atr.HasValue ? watchlist.Atr.Value.ToString() : string.Empty,

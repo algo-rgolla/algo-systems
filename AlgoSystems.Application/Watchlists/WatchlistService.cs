@@ -100,7 +100,7 @@ namespace AlgoSystems.Application.Watchlists
             }
 
             var deleted = await _dbContext.Watchlists
-                .Where(x => x.Id == id)
+                .Where(x => x.WatchlistId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             if (deleted == 0)

@@ -253,17 +253,15 @@ public partial class AlgoSystemsContext : DbContext
 
         modelBuilder.Entity<Watchlist>(entity =>
         {
+            // The table has no primary key constraint, so scaffolding emits HasNoKey(); keep the
+            // identity column as the key so rows can be added and deleted.
+            entity.HasKey(e => e.WatchlistId);
+
             entity.ToTable("Watchlist", "App");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Atr)
                 .HasColumnType("decimal(18, 4)")
                 .HasColumnName("ATR");
-            entity.Property(e => e.BuyReason)
-                .HasMaxLength(5000)
-                .IsUnicode(false);
-            entity.Property(e => e.CloseDate).HasColumnType("datetime");
-            entity.Property(e => e.ClosePrice).HasColumnType("decimal(18, 4)");
             entity.Property(e => e.Comments)
                 .HasMaxLength(5000)
                 .IsUnicode(false);
@@ -271,13 +269,6 @@ public partial class AlgoSystemsContext : DbContext
             entity.Property(e => e.OpenPrice).HasColumnType("decimal(18, 4)");
             entity.Property(e => e.OrderStatus)
                 .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ProfitLoss).HasColumnType("decimal(18, 4)");
-            entity.Property(e => e.ScanType)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.SellReason)
-                .HasMaxLength(5000)
                 .IsUnicode(false);
             entity.Property(e => e.StockAction)
                 .HasMaxLength(10)

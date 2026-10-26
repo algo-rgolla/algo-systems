@@ -211,7 +211,6 @@ namespace AlgoSystems.Application.Services
                     StockCode = symbol,
                     OpenData = DateTime.Now,
                     OrderStatus = "Long",
-                    ScanType = scanType,
                     OpenPrice = product.Open.HasValue ? (decimal)product.Open.Value : 0, // Explicit cast added  
                     Volume = volume,
                     Atr = product.Atr.HasValue ? (decimal?)product.Atr.Value : 0,

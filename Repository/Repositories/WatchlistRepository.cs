@@ -22,7 +22,7 @@ namespace AlgoSystems.Application.Repositories
 
         public Watchlist GetWatchlistById(int id)
         {
-            return Context.Watchlists.Where(x => x.Id == id).FirstOrDefault();
+            return Context.Watchlists.Where(x => x.WatchlistId == id).FirstOrDefault();
 
         }
     }
