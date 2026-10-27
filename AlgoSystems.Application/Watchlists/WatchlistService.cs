@@ -29,8 +29,8 @@ namespace AlgoSystems.Application.Watchlists
         }
 
         /// <summary>
-        /// The most recent watchlist entry per stock whose latest snapshot passes
-        /// <see cref="WatchlistRules.IsValidWatchlistItem"/>, newest first.
+        /// The most recent watchlist entry per stock that has a symbol detail, newest first.
+        /// <see cref="WatchlistRules.IsValidWatchlistItem"/> is not applied here, so every watched stock is shown.
         /// </summary>
         public async Task<ProductsViewModel> GetWatchlistAsync(CancellationToken cancellationToken)
         {
@@ -88,15 +88,16 @@ namespace AlgoSystems.Application.Watchlists
         }
 
         /// <summary>
-        /// Deletes a watchlist entry. Returns false when the user may not delete or the entry does not exist.
+        /// Deletes a watchlist entry. Only allow-listed emails may delete; an anonymous caller is allowed while
+        /// API authentication is disabled.
         /// </summary>
-        public async Task<bool> DeleteWatchlistItemAsync(int id, CancellationToken cancellationToken)
+        public async Task<WatchlistDeleteResult> DeleteWatchlistItemAsync(int id, CancellationToken cancellationToken)
         {
             string? email = _userContext.Email;
             if (!string.IsNullOrEmpty(email) && !DeleteAuthorisedEmails.Contains(email))
             {
                 _logger.LogWarning("Watchlist item {WatchlistId} not deleted: user is not authorised to delete", id);
-                return false;
+                return WatchlistDeleteResult.Forbidden;
             }
 
             var watchlistItem = await _dbContext.Watchlists
@@ -105,14 +106,14 @@ namespace AlgoSystems.Application.Watchlists
             if (watchlistItem == null)
             {
                 _logger.LogWarning("Watchlist item {WatchlistId} not found", id);
-                return false;
+                return WatchlistDeleteResult.NotFound;
             }
 
             _dbContext.Watchlists.Remove(watchlistItem);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Watchlist item {WatchlistId} deleted", id);
-            return true;
+            return WatchlistDeleteResult.Deleted;
         }
 
         // A code can have a row per exchange. Until the watchlist records its exchange, prefer the AU row.

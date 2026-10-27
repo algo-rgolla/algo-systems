@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using AlgoSystems.Application.Watchlists;
 using AlgoSystems.Common.Interfaces;
 using AlgoSystems.Domain.Entities.Models;
 using AlgoSystems.Test.Infrastructure;
@@ -24,7 +25,7 @@ namespace AlgoSystems.Test.Watchlists
 
         protected abstract Task<ProductsViewModel> GetWatchlistAsync(AlgoSystemsContext context, IUserContext userContext);
 
-        protected abstract Task<bool> DeleteAsync(AlgoSystemsContext context, IUserContext userContext, int id);
+        protected abstract Task<WatchlistDeleteResult> DeleteAsync(AlgoSystemsContext context, IUserContext userContext, int id);
 
         [OneTimeSetUp]
         public void CreateDatabase() => _database = SqlServerTestDatabase.Create();
@@ -82,7 +83,7 @@ namespace AlgoSystems.Test.Watchlists
         }
 
         [Test]
-        public async Task ItemFailingTheWatchlistRules_IsExcluded()
+        public async Task ItemFailingTheWatchlistRules_IsStillShown()
         {
             var quiet = ActiveDetail("CBA");
             quiet.ChangeP = 2.5m;
@@ -92,7 +93,7 @@ namespace AlgoSystems.Test.Watchlists
 
             var result = await GetAsync();
 
-            Assert.That(result.Products.Select(p => p.Symbol), Is.EqualTo(new[] { "BHP" }));
+            Assert.That(result.Products.Select(p => p.Symbol), Is.EqualTo(new[] { "CBA", "BHP" }));
         }
 
         [Test]
@@ -192,33 +193,44 @@ namespace AlgoSystems.Test.Watchlists
 
             var deleted = await DeleteAsAsync(AdminEmail, target.WatchlistId);
 
-            Assert.That(deleted, Is.True);
+            Assert.That(deleted, Is.EqualTo(WatchlistDeleteResult.Deleted));
             Assert.That(await RemainingWatchIdsAsync(), Is.EqualTo(new[] { other.WatchlistId }));
         }
 
         [Test]
-        public async Task Delete_MissingId_ReturnsFalse()
+        public async Task Delete_MissingId_ReturnsNotFound()
         {
             var existing = await SeedWatchAsync("BHP", new DateTime(2026, 10, 20));
 
             var deleted = await DeleteAsAsync(AdminEmail, existing.WatchlistId + 1000);
 
-            Assert.That(deleted, Is.False);
+            Assert.That(deleted, Is.EqualTo(WatchlistDeleteResult.NotFound));
             Assert.That(await RemainingWatchIdsAsync(), Is.EqualTo(new[] { existing.WatchlistId }));
         }
 
-        [TestCase(null)]
-        [TestCase("")]
         [TestCase("someone@example.com")]
         [TestCase("ADMIN@algosystems.com.au")]
-        public async Task Delete_ByNonAdmin_ReturnsFalseAndKeepsTheRow(string? email)
+        public async Task Delete_ByNonAdmin_ReturnsForbiddenAndKeepsTheRow(string email)
         {
             var existing = await SeedWatchAsync("BHP", new DateTime(2026, 10, 20));
 
             var deleted = await DeleteAsAsync(email, existing.WatchlistId);
 
-            Assert.That(deleted, Is.False);
+            Assert.That(deleted, Is.EqualTo(WatchlistDeleteResult.Forbidden));
             Assert.That(await RemainingWatchIdsAsync(), Is.EqualTo(new[] { existing.WatchlistId }));
+        }
+
+        // API authentication is disabled, so every caller is anonymous; anonymous deletes are allowed until it is enabled.
+        [TestCase(null)]
+        [TestCase("")]
+        public async Task Delete_ByAnonymousCaller_RemovesTheRow(string? email)
+        {
+            var existing = await SeedWatchAsync("BHP", new DateTime(2026, 10, 20));
+
+            var deleted = await DeleteAsAsync(email, existing.WatchlistId);
+
+            Assert.That(deleted, Is.EqualTo(WatchlistDeleteResult.Deleted));
+            Assert.That(await RemainingWatchIdsAsync(), Is.Empty);
         }
 
         private async Task<ProductsViewModel> GetAsync()
@@ -227,7 +239,7 @@ namespace AlgoSystems.Test.Watchlists
             return await GetWatchlistAsync(context, new TestUserContext(null));
         }
 
-        private async Task<bool> DeleteAsAsync(string? email, int id)
+        private async Task<WatchlistDeleteResult> DeleteAsAsync(string? email, int id)
         {
             await using var context = CreateContext();
             return await DeleteAsync(context, new TestUserContext(email), id);

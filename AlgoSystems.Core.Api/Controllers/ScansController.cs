@@ -15,20 +15,21 @@ namespace AlgoSystems.Core.Api.Controllers
             _productScanService = productScanService;
         }
 
+        /// <summary>The results of one scan, newest first. An unknown scan returns no products.</summary>
         [HttpGet("api/longscan/get-scan-result")]
-        public async Task<IActionResult> GetProductScanResult([FromQuery] LongScanViewModel request, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ProductsViewModel>> GetProductScanResult([FromQuery] LongScanViewModel request, CancellationToken cancellationToken)
         {
-            var products = await _productScanService.GetScanResultsAsync(request.ScanName, cancellationToken);
-
-            return Ok(products);
+            return await _productScanService.GetScanResultsAsync(request.ScanName, cancellationToken);
         }
 
+        /// <summary>The number of results for each catalogued scan.</summary>
         [HttpGet("api/longscan/scan-counters")]
-        public async Task<IActionResult> GetScanCounters(CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ScanCounterListDto>> GetScanCounters(CancellationToken cancellationToken)
         {
-            var counters = await _productScanService.GetScanCountersAsync(cancellationToken);
-
-            return Ok(counters);
+            return await _productScanService.GetScanCountersAsync(cancellationToken);
         }
     }
 }

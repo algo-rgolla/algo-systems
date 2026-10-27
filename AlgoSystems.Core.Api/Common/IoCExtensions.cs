@@ -30,7 +30,6 @@ namespace AlgoSystems.Core.Api.Common
 
             //Repositories
             services.AddScoped<ILookupRepository, LookupRepository>();
-            services.AddScoped<IWatchlistRepository, WatchlistRepository>();
             services.AddScoped<IUserContext, HttpUserContext>();
 
         }
@@ -57,7 +56,6 @@ namespace AlgoSystems.Core.Api.Common
                     
                 })
                 .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning))
-                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.None)
                 );
             //services.AddDbContextPool<AlgoSystemsContext>(options => options.UseSqlServer(connectionString));
 

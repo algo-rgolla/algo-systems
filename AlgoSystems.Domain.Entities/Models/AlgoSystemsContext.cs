@@ -31,9 +31,15 @@ public partial class AlgoSystemsContext : DbContext
 
     public virtual DbSet<Watchlist> Watchlists { get; set; }
 
+    // Re-applied after scaffolding: the host's configured connection string (AddDbContext) must win over this
+    // development fallback, which only applies when the context is created without options.
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);Database=AlgoSystems;Trusted_Connection=True;MultipleActiveResultSets=False;Encrypt=false;TrustServerCertificate=False;Connection Timeout=30");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Server=(local);Database=AlgoSystems;Trusted_Connection=True;MultipleActiveResultSets=False;Encrypt=false;TrustServerCertificate=False;Connection Timeout=30");
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

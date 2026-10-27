@@ -85,8 +85,8 @@ namespace AlgoSystems.Test.Infrastructure
             {
             }
 
-            // The scaffolded OnConfiguring replaces any configured connection string with the development
-            // database's, so it must not run here.
+            // Re-scaffolding regenerates an OnConfiguring that replaces any configured connection string with the
+            // development database's, so it must never run here.
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
             }

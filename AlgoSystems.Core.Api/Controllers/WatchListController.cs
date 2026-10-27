@@ -1,4 +1,6 @@
-﻿using AlgoSystems.Application.Watchlists;
+﻿using System.ComponentModel.DataAnnotations;
+using AlgoSystems.Application.Watchlists;
+using BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlgoSystems.Core.Api.Controllers
@@ -14,30 +16,30 @@ namespace AlgoSystems.Core.Api.Controllers
             _watchlistService = watchlistService;
         }
 
+        /// <summary>The most recent watchlist entry per stock, newest first.</summary>
         [HttpGet("api/eodhd/products/watchlist")]
-        public async Task<IActionResult> GetWatchList(CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ProductsViewModel>> GetWatchList(CancellationToken cancellationToken)
         {
-            var products = await _watchlistService.GetWatchlistAsync(cancellationToken);
-
-            return Ok(products);
+            return await _watchlistService.GetWatchlistAsync(cancellationToken);
         }
 
-        // Delete a watchlist item by Id
+        /// <summary>Deletes a watchlist item by id. Returns <c>true</c> when it was deleted.</summary>
         [HttpDelete("api/watchlist/delete/{id}")]
-        public async Task<IActionResult> DeleteById(int id, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<bool>> DeleteById([Range(1, int.MaxValue)] int id, CancellationToken cancellationToken)
         {
-            if (id <= 0)
-            {
-                return BadRequest("Invalid Id.");
-            }
-
             var result = await _watchlistService.DeleteWatchlistItemAsync(id, cancellationToken);
-            if (!result)
-            {
-                return NotFound("Watchlist item not found.");
-            }
 
-            return Ok(true);
+            return result switch
+            {
+                WatchlistDeleteResult.Deleted => true,
+                WatchlistDeleteResult.Forbidden => Problem(statusCode: StatusCodes.Status403Forbidden, detail: "You are not allowed to delete watchlist items."),
+                _ => Problem(statusCode: StatusCodes.Status404NotFound, detail: "Watchlist item not found."),
+            };
         }
     }
 }

@@ -3,7 +3,6 @@ using AlgoSystems.Core.Api.Common;
 using Microsoft.AspNetCore.Rewrite;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
-using AlgoSystems.Common.Interfaces;
 
 namespace AlgoSystems.Core.Api
 {
@@ -42,20 +41,30 @@ namespace AlgoSystems.Core.Api
             });
 
             builder.Services.AddControllers();
+            // Error responses (unhandled exceptions, 4xx results) are RFC 7807 ProblemDetails carrying the request's traceId.
+            builder.Services.AddProblemDetails();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(Program).Assembly.GetName().Name}.xml"));
+            });
 
             //Register 
             builder.Services.RegisterDataServices(builder.Configuration);
             builder.Services.RegisterApplicationServices();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<IUserContext, HttpUserContext>();
 
             var app = builder.Build();
-            //if (app.Environment.IsDevelopment())
+            // Outside Development, unhandled exceptions are logged and returned as a generic 500 ProblemDetails,
+            // so stack traces and database errors never reach clients.
+            if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler();
             }
 
             app.UseStaticFiles();

@@ -14,7 +14,7 @@ namespace AlgoSystems.Test.Watchlists
         protected override Task<ProductsViewModel> GetWatchlistAsync(AlgoSystemsContext context, IUserContext userContext)
             => Create(context, userContext).GetWatchlistAsync(CancellationToken.None);
 
-        protected override Task<bool> DeleteAsync(AlgoSystemsContext context, IUserContext userContext, int id)
+        protected override Task<WatchlistDeleteResult> DeleteAsync(AlgoSystemsContext context, IUserContext userContext, int id)
             => Create(context, userContext).DeleteWatchlistItemAsync(id, CancellationToken.None);
 
         [Test]
